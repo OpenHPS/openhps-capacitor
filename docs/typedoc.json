@@ -1,0 +1,14 @@
+{
+    "out": "out",
+    "entryPointStrategy": "packages",
+    "entryPoints": [
+        "../modules/web-bluetooth",
+        "../modules/web-geolocation",
+        "../modules/web-sensors",
+        "../modules/webxr"
+    ],
+    "excludePrivate": true,
+    "hideGenerator": true,
+    "categorizeByGroup": true,
+    "media": "media"
+}
