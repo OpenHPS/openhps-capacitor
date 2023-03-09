@@ -8,6 +8,7 @@ import {
     AngleUnit,
     Accuracy2D,
     LengthUnit,
+    DataObject,
 } from '@openhps/core';
 import { Geolocation, Position } from '@capacitor/geolocation';
 
@@ -24,6 +25,7 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
         if (this.options.autoStart) {
             this.once('build', this.start.bind(this));
         }
+        this.options.source = this.source ?? new DataObject();
     }
 
     public start(): Promise<void> {

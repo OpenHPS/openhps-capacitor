@@ -47,9 +47,11 @@
   },
   "peerDependencies": {
     "@openhps/core": ">=0.3.2",
-    "@openhps/rf": ">=0.1.19"
+    "@openhps/rf": ">=0.1.19",
+    "@capacitor/core": ">=4.7.0"
   },
   "devDependencies": {
+    "@capacitor/core": "^4.7.0",
     "@openhps/rf": ">=0.1.19",
     "cross-env": "^7.0.3"
   },

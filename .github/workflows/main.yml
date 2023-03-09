@@ -209,25 +209,25 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: dev
-          package: ./modules/web-bluetooth/package.json
+          package: ./modules/capacitor-bluetooth/package.json
       - name: Publish to NPM (dev)
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: dev
-          package: ./modules/web-geolocation/package.json
+          package: ./modules/capacitor-geolocation/package.json
       - name: Publish to NPM (dev)
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: dev
-          package: ./modules/webxr/package.json
+          package: ./modules/capacitor-wlan/package.json
       - name: Publish to NPM (dev)
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: dev
-          package: ./modules/web-sensors/package.json
+          package: ./modules/capacitor-sensors/package.json
       - name: Publish to GitHub
         if: success()
         run: |
@@ -268,25 +268,25 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: latest
-          package: ./modules/web-bluetooth/package.json
+          package: ./modules/capacitor-bluetooth/package.json
       - name: Publish to NPM (master)
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: latest
-          package: ./modules/web-geolocation/package.json
+          package: ./modules/capacitor-geolocation/package.json
       - name: Publish to NPM (master)
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: latest
-          package: ./modules/webxr/package.json
+          package: ./modules/capacitor-wlan/package.json
       - name: Publish to NPM (master)
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: latest
-          package: ./modules/web-sensors/package.json
+          package: ./modules/capacitor-sensors/package.json
       - name: Publish to GitHub
         if: success()
         run: |

@@ -14,6 +14,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
         this.options.uuids = this.options.uuids || undefined;
         this.once('build', this._onBleInit.bind(this));
         this.once('destroy', this.stop.bind(this));
+        this.options.source = this.source ?? new BLEObject();
     }
 
     private _onBleInit(): Promise<void> {

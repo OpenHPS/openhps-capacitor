@@ -2,12 +2,16 @@
   <l-map 
     id="map" 
     :zoom="zoom" 
-    :center="center">
+    :center="isReady && phone.position ? [phone.position.latitude, phone.position.longitude] : [0, 0]">
     <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         layer-type="base"
         name="OpenStreetMap"
     ></l-tile-layer>
+    <l-marker 
+      key="phone"
+      :lat-lng="isReady && phone.position ? [phone.position.latitude, phone.position.longitude] : [0, 0]">
+    </l-marker>
   </l-map>
 </template>
 
@@ -15,19 +19,39 @@
 import { Vue, Options } from 'vue-property-decorator';
 //import L from 'leaflet';
 import {
-    LMap, LTileLayer
+    LMap, LTileLayer, LMarker
     // @ts-ignore
 } from "@vue-leaflet/vue-leaflet";
+import { namespace } from "s-vuex-class";
+import type { DataFrame, DataObject } from '@openhps/core';
+
+const systemModule = namespace('system');
 
 @Options({
   components: {
     LMap,
-    LTileLayer
+    LTileLayer,
+    LMarker
   }
 })
 export default class MapComponent extends Vue {
+  @systemModule.Action("createPositioningModel") createPositioningModel: () => Promise<void>;
+  @systemModule.Getter("isReady") isReady: boolean;
+  @systemModule.Getter("getPhone") phone: DataObject;
+  @systemModule.Action("setCallback") setCallback: (callback: (frame: DataFrame) => void) => void;
   zoom?: number = 20;
-  center: number[] = [47.41322, -1.219482];
+
+  mounted(): void {
+    this.createPositioningModel().then(() => {
+        this.setDisplayCallback();
+    });
+  }
+
+  private setDisplayCallback(): void {
+      this.setCallback(frame => {
+          console.log("display", frame);
+      });
+  }
 }
 </script>
 

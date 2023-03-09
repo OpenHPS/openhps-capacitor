@@ -2,10 +2,10 @@
     "out": "out",
     "entryPointStrategy": "packages",
     "entryPoints": [
-        "../modules/web-bluetooth",
-        "../modules/web-geolocation",
-        "../modules/web-sensors",
-        "../modules/webxr"
+        "../modules/capacitor-bluetooth",
+        "../modules/capacitor-geolocation",
+        "../modules/capacitor-sensors",
+        "../modules/capacitor-wlan"
     ],
     "excludePrivate": true,
     "hideGenerator": true,

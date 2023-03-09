@@ -46,9 +46,11 @@
     "build:webpack:dev": "cross-env ../../node_modules/.bin/webpack --env dev --"
   },
   "peerDependencies": {
-    "@openhps/core": ">=0.4.8"
+    "@openhps/core": ">=0.4.8",
+    "@capacitor/core": ">=4.7.0"
   },
   "devDependencies": {
+    "@capacitor/core": "^4.7.0",
     "@types/w3c-generic-sensor": "^1.0.6",
     "@types/web": "^0.0.96",
     "cross-env": "^7.0.3"

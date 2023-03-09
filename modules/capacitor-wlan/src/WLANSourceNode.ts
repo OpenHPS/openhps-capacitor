@@ -16,6 +16,8 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
 
         this.once('build', this._onWifiInit.bind(this));
         this.once('destroy', this.stop.bind(this));
+
+        this.options.source = this.source ?? new WLANObject();
     }
 
     private _onWifiInit(): Promise<void> {

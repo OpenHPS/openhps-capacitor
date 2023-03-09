@@ -18,7 +18,6 @@
 
       <div id="container">
         <map-component></map-component>
-        <geolocation-component></geolocation-component>
       </div>
     </ion-content>
   </ion-page>
@@ -26,7 +25,6 @@
 
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import GeolocationComponent from '../components/GeolocationComponent.vue';
 import MapComponent from '../components/MapComponent.vue';
 </script>
 

@@ -11,8 +11,7 @@
   "homepage": "https://openhps.org",
   "private": true,
   "workspaces": [
-    "./modules/*",
-    "./app"
+    "./modules/*"
   ],
   "scripts": {
     "build:typedoc": "typedoc --options docs/typedoc.json",
