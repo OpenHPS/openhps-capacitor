@@ -6,10 +6,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OpenHPS/openhps-web.git"
+    "url": "https://github.com/OpenHPS/openhps-capacitor.git"
   },
   "bugs": {
-    "url": "https://github.com/OpenHPS/openhps-web/issues"
+    "url": "https://github.com/OpenHPS/openhps-capacitor/issues"
   },
   "homepage": "https://openhps.org",
   "publishConfig": {
@@ -18,8 +18,8 @@
   "sideEffects": false,
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
-  "unpkg": "./dist/web/openhps-web-geolocation.min.js",
-  "jsdelivr": "./dist/web/openhps-web-geolocation.min.js",
+  "unpkg": "./dist/web/openhps-capacitor-geolocation.min.js",
+  "jsdelivr": "./dist/web/openhps-capacitor-geolocation.min.js",
   "module": "./dist/esm5/index.js",
   "es2015": "./dist/esm/index.js",
   "files": [
