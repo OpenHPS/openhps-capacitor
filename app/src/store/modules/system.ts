@@ -48,10 +48,11 @@ export const system: Module<PositioningSystemState, RootState> = {
         createPositioningModel({ commit, state }): Promise<Model> {
             return new Promise((resolve, reject) => {
                 ModelBuilder.create()
-                    .addNode(new WorkerNode(require.resolve('./system'),{
+                    .addNode(new WorkerNode('./system',{
                         name: 'output',
                         directory: __dirname,
                         poolSize: 4,
+                        type: 'module',
                         worker: '/js/worker.openhps-core.min.js'
                     }))
                     .from('output')
