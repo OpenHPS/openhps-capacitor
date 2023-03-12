@@ -27,7 +27,7 @@ This component uses the Web Geolocation API to retrieve the absolute position re
 ## Getting Started
 If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/web-geolocation with the following command.
 ```bash
-npm install @openhps/web-geolocation --save
+npm install @openhps/capacitor-geolocation --save
 ```
 
 ## Requirements
@@ -44,6 +44,9 @@ ModelBuilder.create()
     .to(/* ... */)
     .build();
 ```
+
+### Android
+https://capacitorjs.com/docs/apis/geolocation
 
 ## Contributors
 The framework is open source and is mainly developed by PhD Student Maxim Van de Wynckel as part of his research towards *Hybrid Positioning and Implicit Human-Computer Interaction* under the supervision of Prof. Dr. Beat Signer.

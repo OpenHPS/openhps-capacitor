@@ -5,16 +5,20 @@
   "scripts": {
     "postinstall": "shx cp -n node_modules/@openhps/*/dist/web/*.* ./public/js/vendor/openhps/",
     "serve": "vue-cli-service serve",
+    "sync": "ionic cap sync",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start:android": "ionic capacitor run android" 
   },
   "dependencies": {
+    "@capacitor/android": "4.7.0",
     "@capacitor/app": "4.1.1",
     "@capacitor/core": "4.7.0",
     "@capacitor/device": "^4.1.0",
     "@capacitor/haptics": "4.1.0",
+    "@capacitor/ios": "4.7.0",
     "@capacitor/keyboard": "4.1.1",
     "@capacitor/status-bar": "4.1.1",
     "@ionic/vue": "^6.6.1",
