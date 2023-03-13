@@ -18,10 +18,14 @@
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
     </ion-split-pane>
+    <permission-modal :callback="create"></permission-modal>
   </ion-app>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import { Vue, Options } from 'vue-property-decorator';
+import { namespace } from "s-vuex-class";
+import PermissionModal from './components/PermissionModal.vue';
 import {
   IonApp,
   IonContent,
@@ -38,28 +42,89 @@ import {
 } from '@ionic/vue';
 import { ref } from 'vue';
 import {
-  map
+  map,
+  bluetooth
 } from 'ionicons/icons';
 
-const selectedIndex = ref(0);
-const appPages = [
-  {
-    title: 'Map',
-    url: '/',
-    iosIcon: map,
-    mdIcon: map,
-  },
-];
+const systemModule = namespace('system');
+
+@Options({
+  components: {
+    PermissionModal,
+    IonApp,
+    IonContent,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenu,
+    IonMenuToggle,
+    IonNote,
+    IonRouterOutlet,
+    IonSplitPane,
+  }
+})
+export default class App extends Vue {
+  @systemModule.Action("createPositioningModel") createPositioningModel: () => Promise<void>;
+  selectedIndex = ref(0);
+  appPages = [
+    {
+      title: 'Map',
+      url: '/',
+      iosIcon: map,
+      mdIcon: map,
+    },
+    {
+      title: 'Bluetooth LE',
+      url: '/ble',
+      iosIcon: bluetooth,
+      mdIcon: bluetooth,
+    },
+  ];
+  
+  create(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.createPositioningModel().then(() => {
+        resolve();
+      }).catch(reject);
+    });
+  }
+}
 </script>
 
 <style lang="scss">
 #container {
-  position: relative !important;
+  position: relative;
   height: 100%;
 }
 </style>
 
 <style scoped>
+#container {
+  text-align: center;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }

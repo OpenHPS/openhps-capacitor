@@ -1126,7 +1126,14 @@
   dependencies:
     ml-levenberg-marquardt "^4.1.0"
 
-"@openhps/web-sensors@^0.1.4":
+"@openhps/rf@>=0.1.20":
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.20.tgz#050dc074e5505c446db8c447ef97acb4cc5fd92d"
+  integrity sha512-SRWuamcZK6wr5cG1YLyVhdVV8RZtdi2ppG61YMKzBY/ycBoXzG0Tx8mtZJ87chX+MYhSJKYjeDZG0Nwo4G7E2g==
+  dependencies:
+    ml-levenberg-marquardt "^4.1.0"
+
+"@openhps/web-sensors@>=0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@openhps/web-sensors/-/web-sensors-0.1.4.tgz#4fe9dc5c4981ff3df458b8512b6f85977ff6d6d6"
   integrity sha512-YWdyeA+NHaipk8kXjKpTRaggywA/CBvuYiYPNbMKtLzeZsQujzLOimDVfnn8o1CJE9HJGjHP1B2YeOmi99lazg==

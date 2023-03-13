@@ -28,7 +28,7 @@
   ],
   "keywords": [
     "openhps",
-    "web"
+    "capacitor"
   ],
   "scripts": {
     "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
@@ -47,13 +47,12 @@
   },
   "peerDependencies": {
     "@openhps/core": ">=0.3.2",
-    "@capacitor/core": ">=4.7.0"
+    "@capacitor/core": ">=4.7.0",
+    "@capacitor/geolocation": ">=4.1.0"
   },
   "devDependencies": {
     "@capacitor/core": "^4.7.0",
-    "cross-env": "^7.0.3"
-  },
-  "dependencies": {
+    "cross-env": "^7.0.3",
     "@capacitor/geolocation": "^4.1.0"
   }
 }

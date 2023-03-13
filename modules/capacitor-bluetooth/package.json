@@ -28,7 +28,7 @@
   ],
   "keywords": [
     "openhps",
-    "web"
+    "capacitor"
   ],
   "scripts": {
     "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
@@ -47,15 +47,14 @@
   },
   "peerDependencies": {
     "@openhps/core": ">=0.3.2",
-    "@openhps/rf": ">=0.1.19",
-    "@capacitor/core": ">=4.7.0"
+    "@openhps/rf": ">=0.1.20",
+    "@capacitor/core": ">=4.7.0",
+    "@capacitor-community/bluetooth-le": ">=2.1.0"
   },
   "devDependencies": {
     "@capacitor/core": "^4.7.0",
-    "@openhps/rf": ">=0.1.19",
-    "cross-env": "^7.0.3"
-  },
-  "dependencies": {
+    "@openhps/rf": ">=0.1.20",
+    "cross-env": "^7.0.3",
     "@capacitor-community/bluetooth-le": "^2.1.0"
   }
 }

@@ -28,7 +28,7 @@
   ],
   "keywords": [
     "openhps",
-    "web"
+    "capacitor"
   ],
   "scripts": {
     "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
@@ -47,17 +47,19 @@
   },
   "peerDependencies": {
     "@openhps/core": ">=0.4.8",
-    "@capacitor/core": ">=4.7.0"
+    "@capacitor/core": ">=4.7.0",
+    "@capacitor/motion": ">=4.0.2"
   },
   "devDependencies": {
     "@capacitor/core": "^4.7.0",
     "@types/w3c-generic-sensor": "^1.0.6",
     "@types/web": "^0.0.96",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "https-localhost": "^4.7.1",
+    "@capacitor/motion": "^4.0.2",
+    "@openhps/web-sensors": "^0.1.4"
   },
   "dependencies": {
-    "@capacitor/motion": "^4.0.2",
-    "@openhps/web-sensors": "^0.1.4",
-    "https-localhost": "^4.7.1"
+    "@openhps/web-sensors": ">=0.1.4"
   }
 }

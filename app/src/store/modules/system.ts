@@ -10,6 +10,7 @@ import {
     WorkerNode 
 } from '@openhps/core';
 import { GeolocationSourceNode } from '@openhps/capacitor-geolocation';
+import { BLESourceNode } from '@openhps/capacitor-bluetooth';
 
 export interface PositioningSystemState {
     model: Model | undefined;
@@ -34,9 +35,21 @@ export const system: Module<PositioningSystemState, RootState> = {
         isReady(state: PositioningSystemState): boolean {
             return state.model !== undefined && state.phone !== undefined;
         },
+        /**
+         * Get the positioning model that is created
+         *
+         * @param state 
+         * @returns 
+         */
         getPositioningModel(state: PositioningSystemState): Model | undefined {
             return state.model;
         },
+        /**
+         * Get the phone that is being tracked
+         *
+         * @param state 
+         * @returns 
+         */
         getPhone(state: PositioningSystemState): DataObject | undefined {
             return state.phone;
         }
@@ -52,15 +65,40 @@ export const system: Module<PositioningSystemState, RootState> = {
         setCallback({ state }, callback: (frame: DataFrame | DataFrame[]) => void): void {
             state.callback = callback;
         },
+        requestPermission({ commit, state }): Promise<void> {
+            return new Promise((resolve, reject) => {
+                resolve();
+            });
+        },
         createPositioningModel({ commit, state }): Promise<Model> {
             return new Promise((resolve, reject) => {
                 Promise.all([Device.getId(), Device.getInfo()]).then(([id, info]) => {
                     // Get the phone that this positioning system is deployed on
                     state.phone = new DataObject(id.uuid, info.name);
+                    // Create the positioning system
                     return ModelBuilder.create()
+                        .withLogger((level, message) => {
+                            switch(level) {
+                                case 'debug':
+                                    console.debug(message);
+                                    break;
+                                case 'warn':
+                                    console.warn(message);
+                                    break;
+                                case 'error':
+                                    console.error(message);
+                                    break;
+                                case 'info':
+                                default:
+                                    console.info(message);
+                                    break;
+                            } 
+                        })
                         .from(new GeolocationSourceNode({
                             autoStart: true,
                             source: state.phone
+                        }), new BLESourceNode({
+                            autoStart: true,
                         }))
                         .via(
                             new WorkerNode('/js/worker.js',{
@@ -72,6 +110,7 @@ export const system: Module<PositioningSystemState, RootState> = {
                             })
                         )
                         .to(new CallbackSinkNode(frame => {
+                            console.log(frame);
                             state.callback(frame);
                         }))
                         .build()

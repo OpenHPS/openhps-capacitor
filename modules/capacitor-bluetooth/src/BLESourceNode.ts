@@ -56,11 +56,10 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                     scanMode: ScanMode.SCAN_MODE_LOW_LATENCY,
                     services: this.options.uuids,
                 }, (result: ScanResult) => {
-                    alert(result)
                     const frame = new DataFrame();
                     const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
                     beacon.displayName = result.device.name;
-                    beacon.parseManufacturerData(Buffer.from(Object.values(result.manufacturerData)[0].buffer));
+                    beacon.parseManufacturerData(new Uint8Array(Object.values(result.manufacturerData)[0].buffer));
                     frame.addObject(beacon);
     
                     frame.source = this.source;

@@ -35,16 +35,13 @@ const systemModule = namespace('system');
   }
 })
 export default class MapComponent extends Vue {
-  @systemModule.Action("createPositioningModel") createPositioningModel: () => Promise<void>;
   @systemModule.Getter("isReady") isReady: boolean;
   @systemModule.Getter("getPhone") phone: DataObject;
   @systemModule.Action("setCallback") setCallback: (callback: (frame: DataFrame) => void) => void;
   zoom?: number = 20;
 
-  mounted(): void {
-    this.createPositioningModel().then(() => {
-        this.setDisplayCallback();
-    });
+  update(): void {
+    this.setDisplayCallback();
   }
 
   private setDisplayCallback(): void {

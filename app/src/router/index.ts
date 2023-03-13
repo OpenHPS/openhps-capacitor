@@ -5,6 +5,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '',
     component: () => import ('../views/MapPage.vue')
+  },
+  {
+    path: '/ble',
+    component: () => import ('../views/BluetoothPage.vue')
   }
 ];
 
