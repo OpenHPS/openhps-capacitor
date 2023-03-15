@@ -13,28 +13,12 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
     constructor(options?: SensorSourceOptions) {
         super(options);
         this.options.interval = this.options.interval || 0;
-
-        this.once('build', this._onWifiInit.bind(this));
-        this.once('destroy', this.stop.bind(this));
-
         this.options.source = this.source ?? new WLANObject();
-    }
-
-    private _onWifiInit(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            document.addEventListener(
-                'deviceready',
-                function () {
-                    this.logger("debug", "Initializing Wi-Fi scanning ...");
-                    if (this.options.autoStart) {
-                        return this.start();
-                    } else {
-                        return resolve();
-                    }
-                },
-                false,
-            );
-        });
+        
+        if (this.options.autoStart) {
+            this.once('build', this.start.bind(this));
+        }
+        this.once('destroy', this.stop.bind(this));
     }
 
     start(): Promise<void> {

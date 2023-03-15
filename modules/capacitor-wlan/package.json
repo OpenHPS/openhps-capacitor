@@ -16,25 +16,42 @@
     "access": "public"
   },
   "sideEffects": false,
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/types/index.d.ts",
-  "unpkg": "./dist/web/openhps-capacitor-wlan.min.js",
-  "jsdelivr": "./dist/web/openhps-capacitor-wlan.min.js",
-  "module": "./dist/esm5/index.js",
-  "es2015": "./dist/esm/index.js",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
   "files": [
-    "dist/**/*",
-    "src/**/*"
+    "android/src/main/",
+    "android/build.gradle",
+    "dist/",
+    "ios/Plugin/",
+    "electron/",
+    "OpenHPSWLAN.podspec",
+    "electron/"
   ],
   "keywords": [
     "openhps",
     "capacitor"
   ],
   "scripts": {
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS && cd ..",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- autocorrect --format",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
+    "swiftlint": "node-swiftlint",
+    "build": "npm run clean && tsc && npm run build:rollup && npm run build:electron",
+    "build:rollup": "rollup -c rollup.config.js",
+    "build:electron": "tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js && rimraf ./electron/build",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
     "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
     "cover": "cross-env ../../node_modules/.bin/nyc cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json && cross-env ../../node_modules/.bin/nyc report --reporter=cobertura",
     "cover:ci": "cross-env ../../node_modules/.bin/nyc cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json --reporter mocha-junit-reporter && cross-env ../../node_modules/.bin/nyc report --reporter=cobertura",
-    "build": "cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:webpack",
     "build:quick": "cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:webpack",
     "build:typedoc": "cross-env ../../node_modules/.bin/typedoc --options docs/typedoc.json",
     "build:ts:cjs": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.cjs.json",
@@ -46,15 +63,46 @@
     "build:webpack:dev": "cross-env ../../node_modules/.bin/webpack --env dev --"
   },
   "peerDependencies": {
-    "@openhps/core": ">=0.3.2",
-    "@openhps/rf": ">=0.1.19",
     "@capacitor/core": ">=4.7.0",
-    "capacitor-jd-wifi": ">=0.0.7"
+    "@openhps/core": ">=0.3.2",
+    "@openhps/rf": ">=0.1.19"
   },
   "devDependencies": {
+    "@capacitor/android": "^4.0.0",
     "@capacitor/core": "^4.7.0",
     "@openhps/rf": ">=0.1.19",
     "cross-env": "^7.0.3",
-    "capacitor-jd-wifi": "^0.0.7"
+    "@capacitor/ios": "^4.0.0",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "~2.0.0",
+    "@ionic/swiftlint-config": "^1.1.2",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "eslint": "^7.32.0",
+    "prettier": "~2.3.0",
+    "prettier-plugin-java": "~1.0.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.3",
+    "swiftlint": "^1.0.1",
+    "typescript": "~4.1.5"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    },
+    "electron": {
+      "src": "electron"
+    }
+  },
+  "prettier": "@ionic/prettier-config",
+  "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
+  "dependencies": {
+    "node-wifi": "^2.0.16"
   }
 }

@@ -59,7 +59,9 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                     const frame = new DataFrame();
                     const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
                     beacon.displayName = result.device.name;
-                    beacon.parseManufacturerData(new Uint8Array(Object.values(result.manufacturerData)[0].buffer));
+                    if (Object.values(result.manufacturerData)[0]) {
+                        beacon.parseManufacturerData(new Uint8Array(Object.values(result.manufacturerData)[0].buffer));
+                    }
                     frame.addObject(beacon);
     
                     frame.source = this.source;

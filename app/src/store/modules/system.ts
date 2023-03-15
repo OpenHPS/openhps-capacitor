@@ -11,11 +11,31 @@ import {
 } from '@openhps/core';
 import { GeolocationSourceNode } from '@openhps/capacitor-geolocation';
 import { BLESourceNode } from '@openhps/capacitor-bluetooth';
+import { WLANSourceNode } from '@openhps/capacitor-wlan';
+import { SensorSourceNode } from '@openhps/capacitor-sensors';
 
 export interface PositioningSystemState {
     model: Model | undefined;
     phone: DataObject | undefined;
     callback: (frame: DataFrame | DataFrame[]) => void;
+}
+
+function logging(level: string, message: string, payload: Error): void {
+    switch(level) {
+        case 'debug':
+            console.debug(message);
+            break;
+        case 'warn':
+            console.warn(message);
+            break;
+        case 'error':
+            console.error(message, payload);
+            break;
+        case 'info':
+        default:
+            console.info(message);
+            break;
+    } 
 }
 
 export const system: Module<PositioningSystemState, RootState> = {
@@ -77,27 +97,13 @@ export const system: Module<PositioningSystemState, RootState> = {
                     state.phone = new DataObject(id.uuid, info.name);
                     // Create the positioning system
                     return ModelBuilder.create()
-                        .withLogger((level, message) => {
-                            switch(level) {
-                                case 'debug':
-                                    console.debug(message);
-                                    break;
-                                case 'warn':
-                                    console.warn(message);
-                                    break;
-                                case 'error':
-                                    console.error(message);
-                                    break;
-                                case 'info':
-                                default:
-                                    console.info(message);
-                                    break;
-                            } 
-                        })
+                        .withLogger(logging)
                         .from(new GeolocationSourceNode({
                             autoStart: true,
                             source: state.phone
                         }), new BLESourceNode({
+                            autoStart: true,
+                        }), new WLANSourceNode({
                             autoStart: true,
                         }))
                         .via(

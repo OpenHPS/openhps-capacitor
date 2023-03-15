@@ -4,7 +4,7 @@ module.exports = {
     configureWebpack: {
         resolve: {
             alias: {
-               "@openhps/core": path.join(require.resolve("@openhps/core"), "../../", "web", "openhps-core.min.js")
+               "@openhps/core": path.join("public/js/vendor", "openhps", "openhps-core.es.min.js")
             }
         }
     }
