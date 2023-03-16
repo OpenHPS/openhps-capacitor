@@ -1,6 +1,6 @@
 import { DataFrame, SourceNode, SensorSourceOptions, DataObject } from '@openhps/core';
 import { WLANObject, RelativeRSSI } from '@openhps/rf';
-import { wifi } from "capacitor-jd-wifi";
+import { Wifi } from './plugin/index';
 
 /**
  * WLAN source node
@@ -38,7 +38,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
         // Keep scan id as timer identifier
         const scanId = this._timer;
         // Load wifi list
-        wifi.scan()
+        Wifi.scan()
             .then((result: {
                 startScanSuccess: boolean;
                 scanSuccess: boolean;
@@ -88,7 +88,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
 
     public onPull(): Promise<DataFrame> {
         return new Promise<DataFrame>((resolve, reject) => {
-            wifi.scan()
+            Wifi.scan()
                 .then((result: {
                     startScanSuccess: boolean;
                     scanSuccess: boolean;

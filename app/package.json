@@ -5,15 +5,17 @@
   "scripts": {
     "postinstall": "shx cp -n node_modules/@openhps/*/dist/web/*.* ./public/js/vendor/openhps/",
     "serve": "vue-cli-service serve",
-    "sync": "ionic cap sync",
+    "sync": "ionic cap sync && ionic cap sync @capacitor-community/electron",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "start:android": "ionic capacitor run android"
+    "start:android": "ionic capacitor run android",
+    "start:electron": "ionic capacitor open @capacitor-community/electron"
   },
   "dependencies": {
     "@capacitor-community/bluetooth-le": ">=2.1.0",
+    "@capacitor-community/electron": "^4.1.2",
     "@capacitor/android": "4.7.0",
     "@capacitor/app": "4.1.1",
     "@capacitor/core": "4.7.0",
@@ -23,7 +25,6 @@
     "@capacitor/ios": "4.7.0",
     "@capacitor/keyboard": "4.1.1",
     "@capacitor/motion": ">=4.0.2",
-    "capacitor-jd-wifi": "^0.0.7",
     "@capacitor/status-bar": "4.1.1",
     "@ionic/vue": "^6.6.1",
     "@ionic/vue-router": "^6.6.1",
