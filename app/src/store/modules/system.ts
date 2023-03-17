@@ -2,11 +2,14 @@ import { Module } from 'vuex';
 import { RootState } from '../types';
 import { Device } from '@capacitor/device';
 import { 
+    CallbackNode,
     CallbackSinkNode, 
     DataFrame, 
     DataObject, 
+    GraphBuilder, 
     Model, 
     ModelBuilder, 
+    SourceNode, 
     WorkerNode 
 } from '@openhps/core';
 import { GeolocationSourceNode } from '@openhps/capacitor-geolocation';
@@ -17,6 +20,7 @@ import { SensorSourceNode } from '@openhps/capacitor-sensors';
 export interface PositioningSystemState {
     model: Model | undefined;
     phone: DataObject | undefined;
+    sensorCallback: Map<new () => SourceNode<any>, (frame: DataFrame | DataFrame[]) => void>;
     callback: (frame: DataFrame | DataFrame[]) => void;
 }
 
@@ -44,6 +48,7 @@ export const system: Module<PositioningSystemState, RootState> = {
         model: undefined,
         phone: undefined,
         callback: (_: any) => _,
+        sensorCallback: new Map()
     },
     getters: {
         /**
@@ -81,9 +86,14 @@ export const system: Module<PositioningSystemState, RootState> = {
          * 
          * @param state 
          * @param callback 
+         * @param {typeof SourceNode} type Source node type to set callback for 
          */
-        setCallback({ state }, callback: (frame: DataFrame | DataFrame[]) => void): void {
-            state.callback = callback;
+        setCallback({ state }, callback: (frame: DataFrame | DataFrame[]) => void, type?: new () => SourceNode): void {
+            if (type) {
+                state.sensorCallback.set(type, callback);
+            } else {
+                state.callback = callback;
+            }
         },
         requestPermission({ commit, state }): Promise<void> {
             return new Promise((resolve, reject) => {
@@ -98,16 +108,45 @@ export const system: Module<PositioningSystemState, RootState> = {
                     // Create the positioning system
                     return ModelBuilder.create()
                         .withLogger(logging)
-                        .from(new GeolocationSourceNode({
-                            autoStart: true,
-                            source: state.phone
-                        }), new BLESourceNode({
-                            autoStart: true,
-                        }), new WLANSourceNode({
-                            autoStart: true,
-                        }))
+                        .addShape(GraphBuilder.create()
+                            .from(new GeolocationSourceNode({
+                                autoStart: true,
+                                source: state.phone
+                            }))
+                            .via(new CallbackNode(frame => {
+                                const sourceCallback = state.sensorCallback.get(GeolocationSourceNode);
+                                if (sourceCallback !== undefined) {
+                                    sourceCallback(frame);
+                                }
+                            }))
+                            .to("geolocation"))
+                        .addShape(GraphBuilder.create()
+                            .from(new BLESourceNode({
+                                autoStart: true,
+                                source: state.phone
+                            }))
+                            .via(new CallbackNode(frame => {
+                                const sourceCallback = state.sensorCallback.get(BLESourceNode);
+                                if (sourceCallback !== undefined) {
+                                    sourceCallback(frame);
+                                }
+                            }))
+                            .to("ble"))
+                        .addShape(GraphBuilder.create()
+                            .from(new WLANSourceNode({
+                                autoStart: true,
+                                source: state.phone
+                            }))
+                            .via(new CallbackNode(frame => {
+                                const sourceCallback = state.sensorCallback.get(WLANSourceNode);
+                                if (sourceCallback !== undefined) {
+                                    sourceCallback(frame);
+                                }
+                            }))
+                            .to("wlan"))
+                        .from("geolocation", "ble", "wlan")
                         .via(
-                            new WorkerNode('/js/worker.js',{
+                            new WorkerNode('/js/worker.js', {
                                 name: 'output',
                                 directory: __dirname,
                                 poolSize: 4,

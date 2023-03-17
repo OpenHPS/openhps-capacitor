@@ -21,9 +21,9 @@ import com.getcapacitor.annotation.PermissionCallback;
     ),
   }
 )
-public class wifiPlugin extends Plugin {
+public class WifiPlugin extends Plugin {
 
-    private wifi implementation = new wifi();
+    private Wifi implementation = new Wifi();
 
     @PluginMethod
     public void echo(PluginCall call) {

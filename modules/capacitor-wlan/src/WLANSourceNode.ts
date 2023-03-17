@@ -71,17 +71,16 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
     }
 
     public parseList(wifiList: Array<any>): DataFrame {
-        console.log(wifiList)
         const frame = new DataFrame();
         frame.source = this.source ?? new DataObject("source");
         frame.source.relativePositions.forEach((pos) => frame.source.removeRelativePositions(pos.referenceObjectUID));
         wifiList.forEach((value) => {
-            const ap = new WLANObject(value.BSSID);
-            ap.displayName = value.SSID;
+            const ap = new WLANObject(value.bssid);
+            ap.displayName = value.ssid;
             ap.frequency = value.frequency;
             ap.capabilities = value.capabilities;
             frame.addObject(ap);
-            frame.source.addRelativePosition(new RelativeRSSI(ap, value.level));
+            frame.source.addRelativePosition(new RelativeRSSI(ap, value.signal_level));
         });
         return frame;
     }

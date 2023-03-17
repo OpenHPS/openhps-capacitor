@@ -9,6 +9,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/ble',
     component: () => import ('../views/BluetoothPage.vue')
+  },
+  {
+    path: '/wlan',
+    component: () => import ('../views/WLANPage.vue')
   }
 ];
 

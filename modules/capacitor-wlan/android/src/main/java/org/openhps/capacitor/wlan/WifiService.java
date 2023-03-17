@@ -438,6 +438,7 @@ public class WifiService {
             item.put("bssid", scan.BSSID);
             item.put("capabilities", scan.capabilities);
             item.put("frequency", scan.frequency);
+            item.put("signal_level", scan.level);
           } catch (JSONException e) {
             e.printStackTrace();
             call.reject(e.toString());

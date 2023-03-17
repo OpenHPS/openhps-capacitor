@@ -16,7 +16,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
         this.once('destroy', this.stop.bind(this));
         this.options.source = this.source ?? new BLEObject();
     }
-
+    
     private _onBleInit(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             const platform = Capacitor.getPlatform();

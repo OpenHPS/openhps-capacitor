@@ -43,7 +43,8 @@ import {
 import { ref } from 'vue';
 import {
   map,
-  bluetooth
+  bluetooth,
+  wifi
 } from 'ionicons/icons';
 
 const systemModule = namespace('system');
@@ -80,6 +81,12 @@ export default class App extends Vue {
       url: '/ble',
       iosIcon: bluetooth,
       mdIcon: bluetooth,
+    },
+    {
+      title: 'WLAN',
+      url: '/wlan',
+      iosIcon: wifi,
+      mdIcon: wifi,
     },
   ];
   
