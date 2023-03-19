@@ -30,20 +30,25 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
 
     public start(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Geolocation.watchPosition({
-                maximumAge: this.options.interval,
-                timeout: this.options.timeout,
-                enableHighAccuracy: true,
-            }, (position) => {
-                const geoPos = this._convertPosition(position);
-                this.source.setPosition(geoPos);
-                this.push(new DataFrame(this.source));
-            }).then(value => {
-                this._watchId = value;
-            }).catch(error => {
-                this.logger('error', 'Unable to watch for position changes!', error);
-                reject(error);
-            });
+            Geolocation.watchPosition(
+                {
+                    maximumAge: this.options.interval,
+                    timeout: this.options.timeout,
+                    enableHighAccuracy: true,
+                },
+                (position) => {
+                    const geoPos = this._convertPosition(position);
+                    this.source.setPosition(geoPos);
+                    this.push(new DataFrame(this.source));
+                },
+            )
+                .then((value) => {
+                    this._watchId = value;
+                })
+                .catch((error) => {
+                    this.logger('error', 'Unable to watch for position changes!', error);
+                    reject(error);
+                });
             resolve();
         });
     }
@@ -67,7 +72,7 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
     public stop(): Promise<void> {
         return new Promise<void>((resolve) => {
             Geolocation.clearWatch({
-                id: this._watchId
+                id: this._watchId,
             });
             resolve();
         });
@@ -78,11 +83,13 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
             Geolocation.getCurrentPosition({
                 enableHighAccuracy: true,
                 timeout: this.options.timeout,
-            }).then(position => {
-                const geoPos = this._convertPosition(position);
-                this.source.setPosition(geoPos);
-                resolve(new DataFrame(this.source));
-            }).catch(reject);
+            })
+                .then((position) => {
+                    const geoPos = this._convertPosition(position);
+                    this.source.setPosition(geoPos);
+                    resolve(new DataFrame(this.source));
+                })
+                .catch(reject);
         });
     }
 }

@@ -16,25 +16,28 @@ export class BLESourceNode extends SourceNode<DataFrame> {
         this.once('destroy', this.stop.bind(this));
         this.options.source = this.source ?? new BLEObject();
     }
-    
+
     private _onBleInit(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             const platform = Capacitor.getPlatform();
-            BleClient.initialize().then(() => {
-                if (platform === "web" || platform === "electron") {
-                    return Promise.resolve();
-                } else {
-                    this.logger('debug', `Enabling Bluetooth for platform ${platform}...`);
-                    return BleClient.enable();
-                }
-            }).then(() => {
-                this.logger('debug', 'BLE scanning enabled!');
-                if (this.options.autoStart && platform !== "web") {
-                    this.start().then(resolve).catch(reject);
-                } else {
-                    resolve();
-                }
-            }).catch(reject);
+            BleClient.initialize()
+                .then(() => {
+                    if (platform === 'web' || platform === 'electron') {
+                        return Promise.resolve();
+                    } else {
+                        this.logger('debug', `Enabling Bluetooth for platform ${platform}...`);
+                        return BleClient.enable();
+                    }
+                })
+                .then(() => {
+                    this.logger('debug', 'BLE scanning enabled!');
+                    if (this.options.autoStart && platform !== 'web') {
+                        this.start().then(resolve).catch(reject);
+                    } else {
+                        resolve();
+                    }
+                })
+                .catch(reject);
         });
     }
 
@@ -49,29 +52,37 @@ export class BLESourceNode extends SourceNode<DataFrame> {
     start(): Promise<void> {
         return new Promise((resolve, reject) => {
             this.logger('debug', 'Stopping BLE scan ...');
-            BleClient.stopLEScan().then(() => {
-                this.logger('debug', 'Starting BLE scan ...');
-                BleClient.requestLEScan({
-                    allowDuplicates: true,
-                    scanMode: ScanMode.SCAN_MODE_LOW_LATENCY,
-                    services: this.options.uuids,
-                }, (result: ScanResult) => {
-                    const frame = new DataFrame();
-                    const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
-                    beacon.displayName = result.device.name;
-                    if (Object.values(result.manufacturerData)[0]) {
-                        beacon.parseManufacturerData(new Uint8Array(Object.values(result.manufacturerData)[0].buffer));
-                    }
-                    frame.addObject(beacon);
-    
-                    frame.source = this.source;
-                    frame.source.relativePositions.forEach((pos) =>
-                        frame.source.removeRelativePositions(pos.referenceObjectUID),
+            BleClient.stopLEScan()
+                .then(() => {
+                    this.logger('debug', 'Starting BLE scan ...');
+                    BleClient.requestLEScan(
+                        {
+                            allowDuplicates: true,
+                            scanMode: ScanMode.SCAN_MODE_LOW_LATENCY,
+                            services: this.options.uuids,
+                        },
+                        (result: ScanResult) => {
+                            const frame = new DataFrame();
+                            const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
+                            beacon.displayName = result.device.name;
+                            if (Object.values(result.manufacturerData)[0]) {
+                                beacon.parseManufacturerData(
+                                    new Uint8Array(Object.values(result.manufacturerData)[0].buffer),
+                                );
+                            }
+                            frame.addObject(beacon);
+
+                            frame.source = this.source;
+                            frame.source.relativePositions.forEach((pos) =>
+                                frame.source.removeRelativePositions(pos.referenceObjectUID),
+                            );
+                            frame.source.addRelativePosition(new RelativeRSSI(beacon, result.rssi));
+                            this.push(frame);
+                        },
                     );
-                    frame.source.addRelativePosition(new RelativeRSSI(beacon, result.rssi));
-                    this.push(frame);
                 })
-            }).then(resolve).catch(reject);
+                .then(resolve)
+                .catch(reject);
         });
     }
 

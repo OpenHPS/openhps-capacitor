@@ -14,7 +14,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
         super(options);
         this.options.interval = this.options.interval || 0;
         this.options.source = this.source ?? new WLANObject();
-        
+
         if (this.options.autoStart) {
             this.once('build', this.start.bind(this));
         }
@@ -39,11 +39,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
         const scanId = this._timer;
         // Load wifi list
         Wifi.scan()
-            .then((result: {
-                startScanSuccess: boolean;
-                scanSuccess: boolean;
-                scanResult: any;
-            }) => {
+            .then((result: { startScanSuccess: boolean; scanSuccess: boolean; scanResult: any }) => {
                 if (!result.startScanSuccess || !result.scanSuccess) {
                     this.logger('error', 'Wi-Fi scan did not succeed!');
                     return;
@@ -72,7 +68,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
 
     public parseList(wifiList: Array<any>): DataFrame {
         const frame = new DataFrame();
-        frame.source = this.source ?? new DataObject("source");
+        frame.source = this.source ?? new DataObject('source');
         frame.source.relativePositions.forEach((pos) => frame.source.removeRelativePositions(pos.referenceObjectUID));
         wifiList.forEach((value) => {
             const ap = new WLANObject(value.bssid);
@@ -88,11 +84,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
     public onPull(): Promise<DataFrame> {
         return new Promise<DataFrame>((resolve, reject) => {
             Wifi.scan()
-                .then((result: {
-                    startScanSuccess: boolean;
-                    scanSuccess: boolean;
-                    scanResult: any;
-                }) => {
+                .then((result: { startScanSuccess: boolean; scanSuccess: boolean; scanResult: any }) => {
                     if (!result.startScanSuccess || !result.scanSuccess) {
                         this.logger('error', 'Wi-Fi scan did not succeed!');
                         return;

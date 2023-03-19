@@ -42,7 +42,6 @@
     "verify:web": "npm run build",
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- autocorrect --format",
-    "eslint": "eslint . --ext ts",
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
     "build": "npm run clean && cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:rollup && npm run build:electron && npm run build:typedoc",
@@ -70,14 +69,10 @@
     "@capacitor/android": "^4.0.0",
     "@capacitor/core": "^4.7.0",
     "@capacitor/ios": "^4.0.0",
-    "@ionic/eslint-config": "^0.3.0",
-    "@ionic/prettier-config": "~2.0.0",
-    "@ionic/swiftlint-config": "^1.1.2",
     "@openhps/rf": ">=0.1.19",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
     "prettier": "~2.3.0",
     "prettier-plugin-java": "~1.0.2",
     "rimraf": "^3.0.2",
@@ -95,11 +90,6 @@
     "electron": {
       "src": "electron"
     }
-  },
-  "prettier": "@ionic/prettier-config",
-  "swiftlint": "@ionic/swiftlint-config",
-  "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
   },
   "dependencies": {
     "node-wifi": "^2.0.16"

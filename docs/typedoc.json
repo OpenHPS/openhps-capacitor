@@ -5,7 +5,7 @@
         "../modules/capacitor-bluetooth",
         "../modules/capacitor-geolocation",
         "../modules/capacitor-sensors",
-        "../modules/capacitor-wlan"
+        "../modules/capacitor-wlan/src/plugin.js"
     ],
     "excludePrivate": true,
     "hideGenerator": true,
