@@ -28,7 +28,7 @@ the [Web Bluetooth Scanning API](https://googlechrome.github.io/samples/web-blue
 ## Getting Started
 If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/web-bluetooth with the following command.
 ```bash
-npm install @openhps/web-bluetooth --save
+npm install @openhps/capacitor-wlan --save
 ```
 ## Usage
 

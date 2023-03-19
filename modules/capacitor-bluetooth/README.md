@@ -22,8 +22,8 @@
 </h3>
 
 <br />
-This component adds a Web Bluetooth Scanning source node to OpenHPS to scan for BLE beacons or other BLE objects. The component uses
-the [Web Bluetooth Scanning API](https://googlechrome.github.io/samples/web-bluetooth/scan.html) which is currently not implemented in all browsers.
+This component adds a Bluetooth Scanning source node to OpenHPS to scan for BLE beacons or other BLE objects. The component uses
+a capacitor plugin to scan for BLE beacons on Android, iOS and the Web.
 
 ## Getting Started
 If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/capacitor-bluetooth with the following command.
@@ -31,7 +31,8 @@ If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps
 npm install @openhps/capacitor-bluetooth --save
 ```
 ## Usage
-https://github.com/capacitor-community/bluetooth-le
+
+1. Install `@capacitor-community/bluetooth-le` (https://github.com/capacitor-community/bluetooth-le)
 
 ## Contributors
 The framework is open source and is mainly developed by PhD Student Maxim Van de Wynckel as part of his research towards *Hybrid Positioning and Implicit Human-Computer Interaction* under the supervision of Prof. Dr. Beat Signer.

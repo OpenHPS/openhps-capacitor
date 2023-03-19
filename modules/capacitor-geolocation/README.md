@@ -25,7 +25,7 @@
 This component uses the Web Geolocation API to retrieve the absolute position returned by the device.
 
 ## Getting Started
-If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/web-geolocation with the following command.
+If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/capacitor-geolocation with the following command.
 ```bash
 npm install @openhps/capacitor-geolocation --save
 ```

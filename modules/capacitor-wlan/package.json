@@ -49,7 +49,6 @@
     "build:electron": "cross-env ../../node_modules/.bin/tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js && rimraf ./electron/build",
     "clean": "rimraf ./dist",
     "watch": "cross-env ../../node_modules/.bin/tsc --watch",
-    "prepublishOnly": "npm run build",
     "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
     "cover": "cross-env ../../node_modules/.bin/nyc cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json && cross-env ../../node_modules/.bin/nyc report --reporter=cobertura",
     "cover:ci": "cross-env ../../node_modules/.bin/nyc cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json --reporter mocha-junit-reporter && cross-env ../../node_modules/.bin/nyc report --reporter=cobertura",

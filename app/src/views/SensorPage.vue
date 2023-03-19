@@ -20,8 +20,8 @@
         <ion-list>
             <ion-item v-for="item in items" :key="item.uid">
                 <ion-label>
-                  <h2>{{ item.displayName }}</h2>
-                  <p>{{ item.uid }}</p>
+                  <h2></h2>
+                  <p></p>
                 </ion-label>
             </ion-item>
         </ion-list>
@@ -36,7 +36,15 @@ import { Vue, Options } from 'vue-property-decorator';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel } from '@ionic/vue';
 import { namespace } from "s-vuex-class";
 import { 
-    AbsoluteOrientationSensor, Accelerometer, DataFrame, GravitySensor, Magnetometer, RelativeOrientationSensor, SensorType, SourceNode } from '@openhps/core';
+    AbsoluteOrientationSensor, 
+    Accelerometer, 
+    DataFrame, 
+    GravitySensor, 
+    Magnetometer, 
+    RelativeOrientationSensor, 
+    SensorType, 
+    SourceNode 
+} from '@openhps/core';
 import { SensorSourceNode } from '@openhps/capacitor-sensors';
 
 const systemModule = namespace('system');

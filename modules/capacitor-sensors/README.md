@@ -25,9 +25,9 @@
 This component adds [W3C Generic Web Sensors](https://www.w3.org/TR/generic-sensor/) source nodes.
 
 ## Getting Started
-If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/web-sensors with the following command.
+If you have [npm installed](https://www.npmjs.com/get-npm), start using @openhps/capacitor-sensors with the following command.
 ```bash
-npm install @openhps/web-sensors --save
+npm install @openhps/capacitor-sensors --save
 ```
 ## Usage
 
