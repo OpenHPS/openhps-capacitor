@@ -59,11 +59,11 @@ export default class SensorPage extends Vue {
 
   items: Array<any> = [];
   sensors: SensorType[] = [
-    Magnetometer,
-    Accelerometer,
-    GravitySensor,
-    AbsoluteOrientationSensor,
-    RelativeOrientationSensor
+    // Magnetometer,
+    // Accelerometer,
+    // GravitySensor,
+    // AbsoluteOrientationSensor,
+    // RelativeOrientationSensor
   ];
 
   mounted(): void {

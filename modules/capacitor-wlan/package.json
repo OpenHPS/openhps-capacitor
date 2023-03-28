@@ -28,7 +28,7 @@
     "dist/",
     "ios/Plugin/",
     "electron/",
-    "OpenHPSWLAN.podspec",
+    "OpenHpsCapacitorWlan.podspec",
     "electron/"
   ],
   "keywords": [

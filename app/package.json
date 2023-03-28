@@ -11,6 +11,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "start:android": "ionic capacitor run android",
+    "start:ios": "ionic capacitor run ios -l --external",
     "start:electron": "ionic capacitor open @capacitor-community/electron"
   },
   "dependencies": {

@@ -15,7 +15,6 @@ import {
 import { GeolocationSourceNode } from '@openhps/capacitor-geolocation';
 import { BLESourceNode } from '@openhps/capacitor-bluetooth';
 import { WLANSourceNode } from '@openhps/capacitor-wlan';
-import { SensorSourceNode } from '@openhps/capacitor-sensors';
 
 export interface PositioningSystemState {
     model: Model | undefined;
@@ -95,8 +94,8 @@ export const system: Module<PositioningSystemState, RootState> = {
                 state.callback = callback;
             }
         },
-        requestPermission({ commit, state }): Promise<void> {
-            return new Promise((resolve, reject) => {
+        requestPermission(): Promise<void> {
+            return new Promise((resolve) => {
                 resolve();
             });
         },
