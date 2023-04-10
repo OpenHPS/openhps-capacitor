@@ -21,6 +21,18 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
         this.once('destroy', this.stop.bind(this));
     }
 
+    static checkPermissions(): Promise<PermissionStatus> {
+        return new Promise((resolve) => {
+            resolve(undefined);
+        });
+    }
+
+    static requestPermissions(): Promise<PermissionStatus> {
+        return new Promise((resolve) => {
+            resolve(undefined);
+        });
+    }
+
     start(): Promise<void> {
         return new Promise<void>((resolve) => {
             // Scan interval

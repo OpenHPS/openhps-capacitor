@@ -10,7 +10,7 @@ import {
     LengthUnit,
     DataObject,
 } from '@openhps/core';
-import { Geolocation, Position } from '@capacitor/geolocation';
+import { Geolocation, Position, PermissionStatus } from '@capacitor/geolocation';
 
 /**
  * Geolocation source node using @capacitor/geolocation.
@@ -28,7 +28,17 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
         this.options.source = this.source ?? new DataObject();
     }
 
-    public start(): Promise<void> {
+    static checkPermissions(): Promise<PermissionStatus> {
+        return Geolocation.checkPermissions();
+    }
+
+    static requestPermissions(): Promise<PermissionStatus> {
+        return Geolocation.requestPermissions({
+            permissions: ['location']
+        });
+    }
+
+    start(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             Geolocation.watchPosition(
                 {
@@ -69,7 +79,7 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
         return geoPos;
     }
 
-    public stop(): Promise<void> {
+    stop(): Promise<void> {
         return new Promise<void>((resolve) => {
             Geolocation.clearWatch({
                 id: this._watchId,
@@ -78,7 +88,7 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
         });
     }
 
-    public onPull(): Promise<DataFrame> {
+    onPull(): Promise<DataFrame> {
         return new Promise<DataFrame>((resolve, reject) => {
             Geolocation.getCurrentPosition({
                 enableHighAccuracy: true,

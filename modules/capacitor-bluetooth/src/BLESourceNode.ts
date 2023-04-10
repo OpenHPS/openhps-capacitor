@@ -17,6 +17,23 @@ export class BLESourceNode extends SourceNode<DataFrame> {
         this.options.source = this.source ?? new BLEObject();
     }
 
+    static checkPermissions(): Promise<PermissionStatus> {
+        return new Promise((resolve, reject) => {
+
+        });
+    }
+
+    static requestPermissions(): Promise<PermissionStatus> {
+        return new Promise((resolve, reject) => {
+            BleClient.initialize().then(() => {
+                resolve({
+                    name: 'bluetooth',
+                    state: 'granted',
+                } as any);
+            }).catch(reject);
+        });  
+    }
+
     private _onBleInit(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             const platform = Capacitor.getPlatform();

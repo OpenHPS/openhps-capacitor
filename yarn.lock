@@ -939,6 +939,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-4.7.0.tgz#00c909d800a9aa9d7e337ee5ccdfc2be2741ca20"
   integrity sha512-hyglxuzY2mktY0ST+6Y9IpZjSKxBLsG2xtnKWsIqDvXKKBjy5xRjHJMueP4P3u5z+bpLrdY6YlyR9JMIV/Pwcg==
 
+"@capacitor/camera@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-4.1.4.tgz#5d019f88d1f3547b537270e35bcb96084eb48df6"
+  integrity sha512-7f4n7PlnstYsdGyxc0Kc4hIyS6csFLOjXvffm7pJsuy9pSo+kfdOPdYgGg360QwbUAmA+Yv+J1ZW1eFIwgvWrQ==
+
 "@capacitor/core@^4.7.0":
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-4.7.0.tgz#da901af59ded04e695c17598cf646e1ce026e2ce"
@@ -1217,6 +1222,11 @@
   integrity sha512-SRWuamcZK6wr5cG1YLyVhdVV8RZtdi2ppG61YMKzBY/ycBoXzG0Tx8mtZJ87chX+MYhSJKYjeDZG0Nwo4G7E2g==
   dependencies:
     ml-levenberg-marquardt "^4.1.0"
+
+"@openhps/video@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@openhps/video/-/video-0.1.11.tgz#3007a4058944fbd0667a2142938bdd064b871dab"
+  integrity sha512-DTQ83/0wA6HV1z97IRrweYNhZmHkx5ykHa4FREcnBWhIS8AZCyEi/S9bhezsDEoXz628NdM2s0qS7rnTUi1zqA==
 
 "@openhps/web-sensors@>=0.1.4":
   version "0.1.4"
