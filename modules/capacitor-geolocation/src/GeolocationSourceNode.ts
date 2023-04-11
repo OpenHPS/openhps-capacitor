@@ -34,7 +34,7 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
 
     static requestPermissions(): Promise<PermissionStatus> {
         return Geolocation.requestPermissions({
-            permissions: ['location']
+            permissions: ['location'],
         });
     }
 

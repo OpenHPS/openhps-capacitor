@@ -8,6 +8,7 @@ import { Capacitor } from '@capacitor/core';
  */
 export class BLESourceNode extends SourceNode<DataFrame> {
     protected options: BLESourceNodeOptions;
+    protected scanning = false;
 
     constructor(options?: BLESourceNodeOptions) {
         super(options);
@@ -18,20 +19,22 @@ export class BLESourceNode extends SourceNode<DataFrame> {
     }
 
     static checkPermissions(): Promise<PermissionStatus> {
-        return new Promise((resolve, reject) => {
-
+        return new Promise((resolve) => {
+            resolve(undefined);
         });
     }
 
     static requestPermissions(): Promise<PermissionStatus> {
         return new Promise((resolve, reject) => {
-            BleClient.initialize().then(() => {
-                resolve({
-                    name: 'bluetooth',
-                    state: 'granted',
-                } as any);
-            }).catch(reject);
-        });  
+            BleClient.initialize()
+                .then(() => {
+                    resolve({
+                        name: 'bluetooth',
+                        state: 'granted',
+                    } as any);
+                })
+                .catch(reject);
+        });
     }
 
     private _onBleInit(): Promise<void> {
@@ -58,9 +61,14 @@ export class BLESourceNode extends SourceNode<DataFrame> {
         });
     }
 
+    isRunning(): boolean {
+        return this.scanning;
+    }
+
     stop(): Promise<void> {
         return new Promise<void>((resolve) => {
             this.logger('debug', 'Stopping BLE scan ...');
+            this.scanning = false;
             BleClient.stopLEScan();
             resolve();
         });
@@ -82,6 +90,9 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                             const frame = new DataFrame();
                             const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
                             beacon.displayName = result.device.name;
+                            if (result.rawAdvertisement) {
+                                beacon.parseScanData(new Uint8Array(result.rawAdvertisement.buffer));
+                            }
                             if (Object.values(result.manufacturerData)[0]) {
                                 beacon.parseManufacturerData(
                                     new Uint8Array(Object.values(result.manufacturerData)[0].buffer),
@@ -98,7 +109,10 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                         },
                     );
                 })
-                .then(resolve)
+                .then(() => {
+                    this.scanning = true;
+                    resolve();
+                })
                 .catch(reject);
         });
     }

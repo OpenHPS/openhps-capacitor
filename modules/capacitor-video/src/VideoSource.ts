@@ -21,20 +21,19 @@ export class VideoSource extends SourceNode<VideoFrame> {
 
     static requestPermissions(): Promise<PermissionStatus> {
         return Camera.requestPermissions({
-            permissions: ['camera']
+            permissions: ['camera'],
         });
     }
 
     stop(): Promise<void> {
         return new Promise<void>((resolve) => {
-          
             resolve();
         });
     }
 
     start(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            
+        return new Promise((resolve) => {
+            resolve();
         });
     }
 
