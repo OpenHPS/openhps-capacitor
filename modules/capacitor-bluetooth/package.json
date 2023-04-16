@@ -47,13 +47,13 @@
   },
   "peerDependencies": {
     "@openhps/core": ">=0.3.2",
-    "@openhps/rf": ">=0.1.23",
+    "@openhps/rf": ">=0.1.24",
     "@capacitor/core": ">=4.7.0",
     "@capacitor-community/bluetooth-le": ">=2.1.0"
   },
   "devDependencies": {
     "@capacitor/core": "^4.7.3",
-    "@openhps/rf": ">=0.1.23",
+    "@openhps/rf": ">=0.1.24",
     "cross-env": "^7.0.3",
     "@capacitor-community/bluetooth-le": "^2.2.3"
   }

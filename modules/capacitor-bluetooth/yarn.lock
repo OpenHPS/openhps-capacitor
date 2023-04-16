@@ -16,10 +16,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@openhps/rf@>=0.1.23":
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.23.tgz#636616d7b98f04852d0fdf7239d21ff77722bd99"
-  integrity sha512-L2yeSaSm03dpFoFPtYilz1D2Ggpxeb6VGnekuFvK+rOL80vbDFEMJlr1Rmc0lIDlP5Qx3hx1CwsLvqg7BvEl6Q==
+"@openhps/rf@>=0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.24.tgz#0a6f1c7c49d59a642f5c25acde750b3586451b20"
+  integrity sha512-trle7WDjiwQ9YQvJu71E2GbXsxwaclTwZVA8n7MVh/9g+xE3jrHOKPc/OQdfpi48BaOfPy5jv0GG7UMIsFZrpw==
   dependencies:
     ml-levenberg-marquardt "^4.1.2"
 

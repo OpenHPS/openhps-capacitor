@@ -1,5 +1,5 @@
 import { DataFrame, SourceNode, SensorSourceOptions } from '@openhps/core';
-import { BLEObject, MACAddress, RelativeRSSI } from '@openhps/rf';
+import { BLEObject, BLEService, BLEUUID, MACAddress, RelativeRSSI } from '@openhps/rf';
 import { BleClient, ScanMode, ScanResult } from '@capacitor-community/bluetooth-le';
 import { Capacitor } from '@capacitor/core';
 
@@ -93,11 +93,28 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                                 beacon.displayName = result.device.name;
                                 if (result.rawAdvertisement) {
                                     beacon.parseAdvertisement(new Uint8Array(result.rawAdvertisement.buffer));
-                                }
-                                if (Object.values(result.manufacturerData)[0]) {
-                                    beacon.parseManufacturerData(
-                                        new Uint8Array(Object.values(result.manufacturerData)[0].buffer),
-                                    );
+                                } else {
+                                    if (result.manufacturerData) {
+                                        Object.keys(result.manufacturerData).forEach((manufacturer) => {
+                                            const data = result.manufacturerData[manufacturer];
+                                            beacon.parseManufacturerData(
+                                                parseInt(manufacturer),
+                                                new Uint8Array(data.buffer),
+                                            );
+                                        });
+                                    }
+                                    if (result.serviceData) {
+                                        Object.keys(result.serviceData).map((serviceKey) => {
+                                            const data = result.serviceData[serviceKey];
+                                            const serviceUUID = BLEUUID.fromString(serviceKey);
+                                            beacon.services.push(
+                                                new BLEService(serviceUUID, new Uint8Array(data.buffer)),
+                                            );
+                                        });
+                                    }
+                                    if (!beacon.txPower && result.txPower) {
+                                        beacon.txPower = result.txPower;
+                                    }
                                 }
                                 frame.addObject(beacon);
 
