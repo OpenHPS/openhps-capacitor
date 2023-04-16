@@ -4,7 +4,7 @@ import { BleClient, ScanMode, ScanResult } from '@capacitor-community/bluetooth-
 import { Capacitor } from '@capacitor/core';
 
 /**
- * BLE source node using cordova-plugin-ibeacon.
+ * BLE source node using @capacitor-community/bluetooth-le
  */
 export class BLESourceNode extends SourceNode<DataFrame> {
     protected options: BLESourceNodeOptions;
@@ -87,25 +87,29 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                             services: this.options.uuids,
                         },
                         (result: ScanResult) => {
-                            const frame = new DataFrame();
-                            const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
-                            beacon.displayName = result.device.name;
-                            if (result.rawAdvertisement) {
-                                beacon.parseScanData(new Uint8Array(result.rawAdvertisement.buffer));
-                            }
-                            if (Object.values(result.manufacturerData)[0]) {
-                                beacon.parseManufacturerData(
-                                    new Uint8Array(Object.values(result.manufacturerData)[0].buffer),
-                                );
-                            }
-                            frame.addObject(beacon);
+                            try {
+                                const frame = new DataFrame();
+                                const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
+                                beacon.displayName = result.device.name;
+                                if (result.rawAdvertisement) {
+                                    beacon.parseAdvertisement(new Uint8Array(result.rawAdvertisement.buffer));
+                                }
+                                if (Object.values(result.manufacturerData)[0]) {
+                                    beacon.parseManufacturerData(
+                                        new Uint8Array(Object.values(result.manufacturerData)[0].buffer),
+                                    );
+                                }
+                                frame.addObject(beacon);
 
-                            frame.source = this.source;
-                            frame.source.relativePositions.forEach((pos) =>
-                                frame.source.removeRelativePositions(pos.referenceObjectUID),
-                            );
-                            frame.source.addRelativePosition(new RelativeRSSI(beacon, result.rssi));
-                            this.push(frame);
+                                frame.source = this.source;
+                                frame.source.relativePositions.forEach((pos) =>
+                                    frame.source.removeRelativePositions(pos.referenceObjectUID),
+                                );
+                                frame.source.addRelativePosition(new RelativeRSSI(beacon, result.rssi));
+                                this.push(frame);
+                            } catch (ex) {
+                                this.emit('error', ex);
+                            }
                         },
                     );
                 })
