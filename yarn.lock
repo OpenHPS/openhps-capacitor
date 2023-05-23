@@ -1345,10 +1345,10 @@
   dependencies:
     ml-levenberg-marquardt "^4.1.0"
 
-"@openhps/rf@>=0.1.23":
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.23.tgz#636616d7b98f04852d0fdf7239d21ff77722bd99"
-  integrity sha512-L2yeSaSm03dpFoFPtYilz1D2Ggpxeb6VGnekuFvK+rOL80vbDFEMJlr1Rmc0lIDlP5Qx3hx1CwsLvqg7BvEl6Q==
+"@openhps/rf@>=0.1.24":
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.32.tgz#672420e6badf16fab1e4ba850e75cdfa41f4c351"
+  integrity sha512-nwJrN8HwZtXM3MkJW1uAjkbv6mw6+2tok+zfYZT4Swk2xOvoyOvw6woQESnyRhaPNwuEefUFLvMuujPzHKfupA==
   dependencies:
     ml-levenberg-marquardt "^4.1.2"
 

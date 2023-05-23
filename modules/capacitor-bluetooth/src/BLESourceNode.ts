@@ -93,29 +93,32 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                                 beacon.displayName = result.device.name;
                                 if (result.rawAdvertisement) {
                                     beacon.parseAdvertisement(new Uint8Array(result.rawAdvertisement.buffer));
-                                } else {
-                                    if (result.manufacturerData) {
-                                        Object.keys(result.manufacturerData).forEach((manufacturer) => {
-                                            const data = result.manufacturerData[manufacturer];
-                                            beacon.parseManufacturerData(
-                                                parseInt(manufacturer),
-                                                new Uint8Array(data.buffer),
-                                            );
-                                        });
-                                    }
-                                    if (result.serviceData) {
-                                        Object.keys(result.serviceData).map((serviceKey) => {
-                                            const data = result.serviceData[serviceKey];
-                                            const serviceUUID = BLEUUID.fromString(serviceKey);
+                                }
+
+                                if (result.manufacturerData) {
+                                    Object.keys(result.manufacturerData).forEach((manufacturer) => {
+                                        const data = result.manufacturerData[manufacturer];
+                                        beacon.parseManufacturerData(
+                                            parseInt(manufacturer),
+                                            new Uint8Array(data.buffer),
+                                        );
+                                    });
+                                }
+                                if (result.serviceData) {
+                                    Object.keys(result.serviceData).map((serviceKey) => {
+                                        const data = result.serviceData[serviceKey];
+                                        const serviceUUID = BLEUUID.fromString(serviceKey);
+                                        if (!beacon.getServiceByUUID(serviceUUID)) {
                                             beacon.services.push(
                                                 new BLEService(serviceUUID, new Uint8Array(data.buffer)),
                                             );
-                                        });
-                                    }
-                                    if (!beacon.txPower && result.txPower) {
-                                        beacon.txPower = result.txPower;
-                                    }
+                                        }
+                                    });
                                 }
+                                if (!beacon.txPower && result.txPower) {
+                                    beacon.txPower = result.txPower;
+                                }
+
                                 frame.addObject(beacon);
 
                                 frame.source = this.source;
