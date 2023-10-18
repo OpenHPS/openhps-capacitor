@@ -2,14 +2,11 @@
     "out": "out",
     "entryPointStrategy": "packages",
     "entryPoints": [
-        "../modules/capacitor-bluetooth",
         "../modules/capacitor-geolocation",
-        "../modules/capacitor-sensors",
-        "../modules/capacitor-video",
-        "../modules/capacitor-wlan/src/plugin.js"
     ],
     "excludePrivate": true,
     "hideGenerator": true,
     "categorizeByGroup": true,
-    "media": "media"
+    "media": "media",
+    "logLevel": "Verbose"
 }

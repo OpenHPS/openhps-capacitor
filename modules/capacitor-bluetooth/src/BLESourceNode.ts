@@ -12,7 +12,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
 
     constructor(options?: BLESourceNodeOptions) {
         super(options);
-        this.options.uuids = this.options.uuids || undefined;
+        this.options.uuids = this.options.uuids ?? null;
         this.once('build', this._onBleInit.bind(this));
         this.once('destroy', this.stop.bind(this));
         this.options.source = this.source ?? new BLEObject();
@@ -66,11 +66,10 @@ export class BLESourceNode extends SourceNode<DataFrame> {
     }
 
     stop(): Promise<void> {
-        return new Promise<void>((resolve) => {
+        return new Promise<void>((resolve, reject) => {
             this.logger('debug', 'Stopping BLE scan ...');
             this.scanning = false;
-            BleClient.stopLEScan();
-            resolve();
+            BleClient.stopLEScan().then(resolve).catch(reject);
         });
     }
 
@@ -80,7 +79,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
             BleClient.stopLEScan()
                 .then(() => {
                     this.logger('debug', 'Starting BLE scan ...');
-                    BleClient.requestLEScan(
+                    return BleClient.requestLEScan(
                         {
                             allowDuplicates: true,
                             scanMode: ScanMode.SCAN_MODE_LOW_LATENCY,
