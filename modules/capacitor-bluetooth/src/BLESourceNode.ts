@@ -111,14 +111,12 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                                         );
                                     });
                                 }
-                                if (result.serviceData) {
+                                if (result.serviceData !== undefined) {
                                     Object.keys(result.serviceData).map((serviceKey) => {
                                         const data = result.serviceData[serviceKey];
                                         const serviceUUID = BLEUUID.fromString(serviceKey);
                                         if (!beacon.getServiceByUUID(serviceUUID)) {
-                                            beacon.services.push(
-                                                new BLEService(serviceUUID, new Uint8Array(data.buffer)),
-                                            );
+                                            beacon.addService(new BLEService(serviceUUID, new Uint8Array(data.buffer)));
                                         }
                                     });
                                 }
