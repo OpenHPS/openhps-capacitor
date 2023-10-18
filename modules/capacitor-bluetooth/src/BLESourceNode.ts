@@ -42,7 +42,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
             const platform = Capacitor.getPlatform();
             BleClient.initialize()
                 .then(() => {
-                    if (platform === 'web' || platform === 'electron') {
+                    if (platform !== 'android') {
                         return Promise.resolve();
                     } else {
                         this.logger('debug', `Enabling Bluetooth for platform ${platform}...`);
