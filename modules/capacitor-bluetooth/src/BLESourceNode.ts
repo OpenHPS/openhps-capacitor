@@ -75,6 +75,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
 
     start(): Promise<void> {
         return new Promise((resolve, reject) => {
+            const platform = Capacitor.getPlatform();
             this.logger('debug', 'Stopping BLE scan ...');
             BleClient.stopLEScan()
                 .then(() => {
@@ -86,9 +87,16 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                             services: this.options.uuids,
                         },
                         (result: ScanResult) => {
+                            if (this.options.debug) {
+                                console.log(result);
+                            }
                             try {
                                 const frame = new DataFrame();
-                                const beacon = new BLEObject(MACAddress.fromString(result.device.deviceId));
+                                const uid =
+                                    platform === 'android'
+                                        ? MACAddress.fromString(result.device.deviceId)
+                                        : result.device.deviceId;
+                                const beacon = new BLEObject(uid as any);
                                 beacon.displayName = result.device.name;
                                 if (result.rawAdvertisement) {
                                     beacon.parseAdvertisement(new Uint8Array(result.rawAdvertisement.buffer));
@@ -152,4 +160,5 @@ export interface BLESourceNodeOptions extends SensorSourceOptions {
      * List of UUIDs that should be included in the result scan.
      */
     uuids?: string[];
+    debug?: boolean;
 }

@@ -2,26 +2,26 @@
 # yarn lockfile v1
 
 
-"@capacitor-community/bluetooth-le@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@capacitor-community/bluetooth-le/-/bluetooth-le-2.2.3.tgz#e0774a4f768ac3f65c0aa943b815b62cddb5e305"
-  integrity sha512-bVxff7QsSsJONUWEPB9sbJu3aiuuL3ISvhhitImvy2gawl3D6giNsjJnDPvYjjKs2o3Xbeq/U71UMx11BDR98g==
+"@capacitor-community/bluetooth-le@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/bluetooth-le/-/bluetooth-le-3.0.2.tgz#d32d3013ae0bfaa02e9dce7b419ea17626e46e58"
+  integrity sha512-3S32RlCnwEGnrWaO6/hVSpirInyoVZhXJEJygfgFvdFQz0b4WnXJwgF/0IZojuomjdfd22cfsWpO4hdGLNc7yg==
   dependencies:
     "@types/web-bluetooth" "^0.0.16"
 
-"@capacitor/core@^4.7.3":
-  version "4.7.3"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-4.7.3.tgz#d28dab05be7a390065cc92fab6f788c2a8dcf344"
-  integrity sha512-IDhJapHqfJNpSlq89M0quOZGb08uOUZhVhyRDdrGUrwa4ttFoWeX/Vi9F+b9bffsDRKkSLF0BhzA9TH7ko5c3A==
+"@capacitor/core@^5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.5.0.tgz#a66cdf196dfa3b626bf9577c0aed1702988d1017"
+  integrity sha512-w59io0ctwnb7JRng7yO2H0YLHG8uz7XARUugRfp5aYTNiG55FqdSmSMOOqGCMPRg4sEnKjJTvAa4ImCYh3Kk1w==
   dependencies:
     tslib "^2.1.0"
 
-"@openhps/rf@>=0.1.24":
-  version "0.1.24"
-  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.24.tgz#0a6f1c7c49d59a642f5c25acde750b3586451b20"
-  integrity sha512-trle7WDjiwQ9YQvJu71E2GbXsxwaclTwZVA8n7MVh/9g+xE3jrHOKPc/OQdfpi48BaOfPy5jv0GG7UMIsFZrpw==
+"@openhps/rf@>=0.1.45":
+  version "0.1.45"
+  resolved "https://registry.yarnpkg.com/@openhps/rf/-/rf-0.1.45.tgz#cd98d744777593a25287518004961abacfa6c65e"
+  integrity sha512-FmrNdq3vJsj2P7Sw+pUPpdhdDHz1+oABCyXmWT6CzHtyKj1e5mzQNNhvobYif+VxtIt+mzvsNEPDOS0NcfnQCw==
   dependencies:
-    ml-levenberg-marquardt "^4.1.2"
+    ml-levenberg-marquardt "^4.1.3"
 
 "@types/web-bluetooth@^0.0.16":
   version "0.0.16"
@@ -77,10 +77,10 @@ ml-array-rescale@^1.3.7:
     ml-array-max "^1.2.4"
     ml-array-min "^1.2.3"
 
-ml-levenberg-marquardt@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/ml-levenberg-marquardt/-/ml-levenberg-marquardt-4.1.2.tgz#dd64c9b9f25d3ea5c2ee9afd9556c37e5bceab92"
-  integrity sha512-bSs5HdflwpciC9H77LeobJf8Lss7zxKJTCbbSqUjjwFCjNo2ekiarLURlCiGf+KUKcgpz8HaETa9XCFQNdBPmA==
+ml-levenberg-marquardt@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/ml-levenberg-marquardt/-/ml-levenberg-marquardt-4.1.3.tgz#60ffd2546b4ce21907194b8ccb8e12a60e3a7321"
+  integrity sha512-CuR8mg1IIgb5IuDkdJBpnHmx+r6FpRDDPvYhAGq+4WVMLw/lu44P6PniyCrdvk1PNBmxVXN/LwBDMpQ/VaWhgA==
   dependencies:
     is-any-array "^2.0.0"
     ml-matrix "^6.10.4"
