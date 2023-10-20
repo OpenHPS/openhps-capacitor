@@ -12,7 +12,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
 
     constructor(options?: BLESourceNodeOptions) {
         super(options);
-        this.options.uuids = this.options.uuids ?? null;
+        this.options.uuids = this.options.uuids ?? undefined;
         this.once('build', this._onBleInit.bind(this));
         this.once('destroy', this.stop.bind(this));
         this.options.source = this.source ?? new BLEObject();
@@ -88,7 +88,7 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                         },
                         (result: ScanResult) => {
                             if (this.options.debug) {
-                                console.log(result);
+                                this.logger('debug', 'BLE scan result', result);
                             }
                             try {
                                 const frame = new DataFrame();
@@ -155,8 +155,11 @@ export class BLESourceNode extends SourceNode<DataFrame> {
 
 export interface BLESourceNodeOptions extends SensorSourceOptions {
     /**
-     * List of UUIDs that should be included in the result scan.
+     * List of Service UUIDs that should be included in the result scan.
      */
     uuids?: string[];
+    /**
+     * Debugging mode
+     */
     debug?: boolean;
 }

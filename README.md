@@ -3,17 +3,17 @@
   OpenHPS Ionic Capacitor Components
 </h1>
 <p align="center">
-    <a href="https://github.com/OpenHPS/openhps-web/actions/workflows/main.yml" target="_blank">
-        <img alt="Build Status" src="https://github.com/OpenHPS/openhps-web/actions/workflows/main.yml/badge.svg">
+    <a href="https://github.com/OpenHPS/openhps-capacitor/actions/workflows/main.yml" target="_blank">
+        <img alt="Build Status" src="https://github.com/OpenHPS/openhps-capacitor/actions/workflows/main.yml/badge.svg">
     </a>
-    <a href="https://codecov.io/gh/OpenHPS/openhps-web">
-        <img src="https://codecov.io/gh/OpenHPS/openhps-web/branch/master/graph/badge.svg"/>
+    <a href="https://codecov.io/gh/OpenHPS/openhps-capacitor">
+        <img src="https://codecov.io/gh/OpenHPS/openhps-capacitor/branch/master/graph/badge.svg"/>
     </a>
-    <a href="https://codeclimate.com/github/OpenHPS/openhps-web/" target="_blank">
-        <img alt="Maintainability" src="https://img.shields.io/codeclimate/maintainability/OpenHPS/openhps-web">
+    <a href="https://codeclimate.com/github/OpenHPS/openhps-capacitor/" target="_blank">
+        <img alt="Maintainability" src="https://img.shields.io/codeclimate/maintainability/OpenHPS/openhps-capacitor">
     </a>
-    <a href="https://badge.fury.io/js/@openhps%web">
-        <img src="https://badge.fury.io/js/@openhps%2Fweb.svg" alt="npm version" height="18">
+    <a href="https://badge.fury.io/js/@openhps%capacitor">
+        <img src="https://badge.fury.io/js/@openhps%2Fcapacitor.svg" alt="npm version" height="18">
     </a>
 </p>
 
