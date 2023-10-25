@@ -81,6 +81,9 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                 key: `${this.prefix}_keys`,
             })
                 .then((result) => {
+                    if (result.value === null) {
+                        return resolve([]);
+                    }
                     resolve(JSON.parse(result.value) || []);
                 })
                 .catch(reject);
@@ -93,6 +96,9 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                 key: `${this.prefix}.${id}`,
             })
                 .then((result) => {
+                    if (result.value === null) {
+                        return resolve(undefined);
+                    }
                     const jsonStr = this.options.compress ? decompressFromUTF16(result.value) : result.value;
                     try {
                         resolve(JSON.parse(jsonStr));
