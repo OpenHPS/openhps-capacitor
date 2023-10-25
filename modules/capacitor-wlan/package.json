@@ -1,6 +1,6 @@
 {
   "name": "@openhps/capacitor-wlan",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Open Hybrid Positioning System - Capacitor WLAN Scanning",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
