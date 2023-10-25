@@ -13,6 +13,8 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
     protected options: CapacitorPreferencesOptions;
     protected _indexKeys: string[] = [];
     protected prefix: string;
+    protected busy: boolean = false;
+    protected lockStack: string; // TODO: Can be shared lock
 
     constructor(dataType?: new () => T, options?: CapacitorPreferencesOptions) {
         super(dataType as unknown as new () => T, options);
@@ -55,7 +57,7 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     count(filter?: FilterQuery<T>): Promise<number> {
         return new Promise((resolve) => {
-            this._findAll().then(async (items) => {
+            this._findAll(false).then(async (items) => {
                 if (filter) {
                     let count = 0;
                     for (let i = 0; i <= items.length; i += this.options.chunkSize) {
@@ -75,18 +77,56 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
         });
     }
 
-    private _findAll(): Promise<I[]> {
+    private _findAll(write: boolean): Promise<I[]> {
         return new Promise((resolve, reject) => {
-            Preferences.get({
-                key: `${this.prefix}_keys`,
-            })
+            this._lockIndex()
+                .then(() => {
+                    return Preferences.get({
+                        key: `${this.prefix}_keys`,
+                    });
+                })
                 .then((result) => {
+                    if (!write) {
+                        this._unlockIndex();
+                    }
+
                     if (result.value === null) {
                         return resolve([]);
                     }
                     resolve(JSON.parse(result.value) || []);
                 })
                 .catch(reject);
+        });
+    }
+
+    private _unlockIndex(): void {
+        this.busy = false;
+    }
+
+    private _lockIndex(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (this.busy) {
+                let count = 0;
+                const interval = setInterval(() => {
+                    if (!this.busy) {
+                        this.busy = true;
+                        clearInterval(interval);
+                        resolve();
+                    } else {
+                        count++;
+                        if (count > 100) {
+                            clearInterval(interval);
+                            const error = new Error('Possible deadlock!');
+                            error.stack = this.lockStack;
+                            reject(error);
+                        }
+                    }
+                }, 10);
+            } else {
+                this.busy = true;
+                this.lockStack = new Error().stack;
+                resolve();
+            }
         });
     }
 
@@ -112,13 +152,16 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     findByUID(id: I): Promise<T> {
         return new Promise((resolve, reject) => {
-            const serialized = this._findByUID(id);
-            if (serialized) {
-                const obj = this.options.deserialize(this._findByUID(id));
-                resolve(obj);
-            } else {
-                reject(`${this.dataType.name} with identifier #${id} not found!`);
-            }
+            this._findByUID(id)
+                .then((serialized) => {
+                    if (serialized) {
+                        const obj = this.options.deserialize(serialized);
+                        resolve(obj);
+                    } else {
+                        reject(`${this.dataType.name} with identifier #${id} not found!`);
+                    }
+                })
+                .catch(reject);
         });
     }
 
@@ -141,7 +184,7 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     findAll(query?: FilterQuery<T>, options: FindOptions = {}): Promise<T[]> {
         return new Promise<T[]>((resolve, reject) => {
-            this._findAll()
+            this._findAll(false)
                 .then(async (items) => {
                     options.limit = options.limit || items.length;
                     let data: T[] = [];
@@ -152,7 +195,7 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                             if (value && MemoryQueryEvaluator.evaluate(value, query)) {
                                 data.push(value);
                                 if (!options.sort && data.length >= options.limit) {
-                                    return;
+                                    break;
                                 }
                             }
                         }
@@ -192,17 +235,24 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                 value: compressedStr,
             })
                 .then(() => {
-                    return this._findAll();
+                    return this._findAll(true);
                 })
                 .then((items) => {
                     if (!items.includes(id)) {
                         items.push(id);
-                        Preferences.set({
+                        return Preferences.set({
                             key: `${this.prefix}_keys`,
                             value: JSON.stringify(items),
                         });
+                    } else {
+                        return Promise.resolve();
                     }
+                })
+                .then(() => {
                     resolve(object);
+                })
+                .finally(() => {
+                    this._unlockIndex();
                 })
                 .catch(reject);
         });
@@ -210,7 +260,7 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     delete(id: I): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            this._findAll()
+            this._findAll(true)
                 .then((items) => {
                     items.splice(items.indexOf(id), 1);
                     return Preferences.set({
@@ -226,6 +276,9 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                 .then(() => {
                     resolve();
                 })
+                .finally(() => {
+                    this._unlockIndex();
+                })
                 .catch(reject);
         });
     }
@@ -235,17 +288,18 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
             if (!filter) {
                 Preferences.clear().then(resolve).catch(reject);
             } else {
-                this._findAll()
+                this._findAll(false)
                     .then(async (items) => {
                         for (let i = 0; i <= items.length; i += this.options.chunkSize) {
                             const keys = items.slice(i, i + this.options.chunkSize);
                             for (const key of keys) {
                                 const value = await this._findByUID(key);
                                 if (MemoryQueryEvaluator.evaluate(value, filter)) {
-                                    this.delete(key);
+                                    await this.delete(key);
                                 }
                             }
                         }
+                        resolve();
                     })
                     .catch(reject);
             }
