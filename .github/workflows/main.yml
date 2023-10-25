@@ -228,6 +228,12 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
           tag: dev
           package: ./modules/capacitor-sensors/package.json
+      - name: Publish to NPM (dev)
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: dev
+          package: ./modules/capacitor-preferences/package.json
       - name: Publish to GitHub
         if: success()
         run: |
@@ -287,6 +293,12 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
           tag: latest
           package: ./modules/capacitor-sensors/package.json
+      - name: Publish to NPM (master)
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: latest
+          package: ./modules/capacitor-preferences/package.json
       - name: Publish to GitHub
         if: success()
         run: |
