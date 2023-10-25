@@ -1,0 +1,10 @@
+{
+    "entryPoints": ["../src/index.ts"],
+    "out": "out",
+    "exclude": ["**/_internal/**/*"],
+    "excludePrivate": true,
+    "hideGenerator": true,
+    "tsconfig": "../tsconfig/tsconfig.base.json",
+    "categorizeByGroup": true,
+    "media": "media"
+}
