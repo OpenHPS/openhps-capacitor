@@ -13,8 +13,9 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
     protected options: CapacitorPreferencesOptions;
     protected _indexKeys: string[] = [];
     protected prefix: string;
-    protected busy: boolean = false;
-    protected lockStack: string; // TODO: Can be shared lock
+    protected lockIndex: number = 0;
+    protected exclusiveLock: number = undefined;
+    protected sharedLocks: Set<number> = new Set();
 
     constructor(dataType?: new () => T, options?: CapacitorPreferencesOptions) {
         super(dataType as unknown as new () => T, options);
@@ -79,15 +80,18 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     private _findAll(write: boolean): Promise<I[]> {
         return new Promise((resolve, reject) => {
-            this._lockIndex()
-                .then(() => {
-                    return Preferences.get({
-                        key: `${this.prefix}_keys`,
-                    });
+            this._lockIndex(write)
+                .then((id) => {
+                    return Promise.all([
+                        id,
+                        Preferences.get({
+                            key: `${this.prefix}_keys`,
+                        }),
+                    ]);
                 })
-                .then((result) => {
+                .then(([id, result]) => {
                     if (!write) {
-                        this._unlockIndex();
+                        this._unlockIndex(id);
                     }
 
                     if (result.value === null) {
@@ -99,33 +103,38 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
         });
     }
 
-    private _unlockIndex(): void {
-        this.busy = false;
+    private _unlockIndex(id?: number): void {
+        if (this.sharedLocks.has(id)) {
+            this.sharedLocks.delete(id);
+        } else {
+            this.exclusiveLock = undefined;
+        }
     }
 
-    private _lockIndex(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if (this.busy) {
-                let count = 0;
+    private _lockIndex(exclusive: boolean): Promise<number> {
+        return new Promise((resolve) => {
+            const id = this.lockIndex++;
+            if (this.exclusiveLock !== undefined || (this.sharedLocks.size > 0 && exclusive)) {
                 const interval = setInterval(() => {
-                    if (!this.busy) {
-                        this.busy = true;
-                        clearInterval(interval);
-                        resolve();
-                    } else {
-                        count++;
-                        if (count > 100) {
-                            clearInterval(interval);
-                            const error = new Error('Possible deadlock!');
-                            error.stack = this.lockStack;
-                            reject(error);
+                    if (
+                        (exclusive && this.exclusiveLock === undefined && this.sharedLocks.size === 0) ||
+                        (!exclusive && this.exclusiveLock === undefined)
+                    ) {
+                        if (!exclusive) {
+                            this.sharedLocks.add(id);
+                        } else {
+                            this.exclusiveLock = id;
                         }
+                        clearInterval(interval);
+                        resolve(id);
                     }
                 }, 10);
+            } else if (exclusive) {
+                this.exclusiveLock = id;
+                resolve(id);
             } else {
-                this.busy = true;
-                this.lockStack = new Error().stack;
-                resolve();
+                this.sharedLocks.add(id);
+                resolve(id);
             }
         });
     }
@@ -285,25 +294,30 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     deleteAll(filter?: FilterQuery<T>): Promise<void> {
         return new Promise((resolve, reject) => {
-            if (!filter) {
-                Preferences.clear().then(resolve).catch(reject);
-            } else {
-                this._findAll(false)
-                    .then(async (items) => {
-                        for (let i = 0; i <= items.length; i += this.options.chunkSize) {
-                            const keys = items.slice(i, i + this.options.chunkSize);
-                            for (const key of keys) {
-                                const value = await this._findByUID(key);
-                                if (MemoryQueryEvaluator.evaluate(value, filter)) {
-                                    await this.delete(key);
+            this._findAll(false)
+                .then(async (items) => {
+                    if (!filter) {
+                        Promise.all(items.map((item) => this.delete(item)))
+                            .then(() => resolve())
+                            .catch(reject);
+                    } else {
+                        this._findAll(false)
+                            .then(async (items) => {
+                                for (let i = 0; i <= items.length; i += this.options.chunkSize) {
+                                    const keys = items.slice(i, i + this.options.chunkSize);
+                                    for (const key of keys) {
+                                        const value = await this._findByUID(key);
+                                        if (MemoryQueryEvaluator.evaluate(value, filter)) {
+                                            await this.delete(key);
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                        resolve();
-                    })
-                    .catch(reject);
-            }
-            resolve();
+                                resolve();
+                            })
+                            .catch(reject);
+                    }
+                })
+                .catch(reject);
         });
     }
 }
