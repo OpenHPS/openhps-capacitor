@@ -1,6 +1,6 @@
 {
   "name": "@openhps/capacitor-preferences",
-  "version": "0.1.0",
+  "version": "0.1.12",
   "description": "Open Hybrid Positioning System - Capacitor Preferences API",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
