@@ -51,15 +51,15 @@
     "@capacitor/motion": ">=4.0.2"
   },
   "devDependencies": {
-    "@capacitor/core": "^4.7.0",
-    "@types/w3c-generic-sensor": "^1.0.6",
-    "@types/web": "^0.0.96",
+    "@capacitor/core": "^5.7.0",
+    "@types/w3c-generic-sensor": "^1.0.9",
+    "@types/web": "^0.0.140",
     "cross-env": "^7.0.3",
     "https-localhost": "^4.7.1",
-    "@capacitor/motion": "^4.0.2",
-    "@openhps/web-sensors": "^0.1.4"
+    "@capacitor/motion": "^5.0.7",
+    "@openhps/web-sensors": "^0.1.15"
   },
   "dependencies": {
-    "@openhps/web-sensors": ">=0.1.4"
+    "@openhps/web-sensors": ">=0.1.15"
   }
 }

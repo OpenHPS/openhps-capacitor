@@ -4,6 +4,7 @@
   "description": "Open Hybrid Positioning System - Capacitor WLAN Scanning",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenHPS/openhps-capacitor.git"
@@ -65,19 +66,19 @@
     "@openhps/rf": ">=0.1.19"
   },
   "devDependencies": {
-    "@capacitor/android": "^4.0.0",
-    "@capacitor/core": "^4.7.0",
-    "@capacitor/ios": "^4.0.0",
-    "@openhps/rf": ">=0.1.19",
-    "@rollup/plugin-commonjs": "^20.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@capacitor/android": "^5.7.0",
+    "@capacitor/core": "^5.7.0",
+    "@capacitor/ios": "^5.7.0",
+    "@openhps/rf": ">=0.1.61",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "cross-env": "^7.0.3",
-    "prettier": "~2.3.0",
-    "prettier-plugin-java": "~1.0.2",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.56.3",
+    "prettier": "~3.2.5",
+    "prettier-plugin-java": "~2.6.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.12.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "swiftlint": "^1.0.1"
+    "swiftlint": "^1.0.2"
   },
   "capacitor": {
     "ios": {

@@ -53,9 +53,9 @@
     "@capacitor/camera": ">=4.1.4"
   },
   "devDependencies": {
-    "@capacitor/camera": "^4.1.4",
-    "@capacitor/core": "^4.7.0",
-    "@openhps/video": "^0.1.11",
+    "@capacitor/camera": "^5.0.9",
+    "@capacitor/core": "^5.7.0",
+    "@openhps/video": "^0.1.14",
     "cross-env": "^7.0.3"
   }
 }

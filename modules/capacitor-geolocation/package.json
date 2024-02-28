@@ -51,8 +51,8 @@
     "@capacitor/geolocation": ">=4.1.0"
   },
   "devDependencies": {
-    "@capacitor/core": "^5.5.1",
+    "@capacitor/core": "^5.7.0",
     "cross-env": "^7.0.3",
-    "@capacitor/geolocation": "^5.0.6"
+    "@capacitor/geolocation": "^5.0.7"
   }
 }
