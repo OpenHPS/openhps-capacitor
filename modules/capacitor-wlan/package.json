@@ -4,7 +4,6 @@
   "description": "Open Hybrid Positioning System - Capacitor WLAN Scanning",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenHPS/openhps-capacitor.git"
@@ -46,8 +45,8 @@
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
     "build": "npm run clean && cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:rollup && npm run build:electron && npm run build:typedoc",
-    "build:rollup": "rollup -c rollup.config.js",
-    "build:electron": "cross-env ../../node_modules/.bin/tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js && rimraf ./electron/build",
+    "build:rollup": "rollup -c rollup.config.js --bundleConfigAsCjs",
+    "build:electron": "cross-env ../../node_modules/.bin/tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js --bundleConfigAsCjs && rimraf ./electron/build",
     "clean": "rimraf ./dist",
     "watch": "cross-env ../../node_modules/.bin/tsc --watch",
     "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
