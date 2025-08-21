@@ -1,6 +1,6 @@
 {
   "name": "@openhps/capacitor-video",
-  "version": "0.1.18",
+  "version": "1.0.0",
   "description": "Open Hybrid Positioning System - Capacitor Video",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
@@ -53,9 +53,9 @@
     "@capacitor/camera": ">=4.1.4"
   },
   "devDependencies": {
-    "@capacitor/camera": "^5.0.9",
-    "@capacitor/core": "^5.7.0",
+    "@capacitor/camera": "^7.0.2",
+    "@capacitor/core": "^7.4.3",
     "@openhps/video": "^0.1.14",
-    "cross-env": "^7.0.3"
+    "cross-env": "^10.0.0"
   }
 }

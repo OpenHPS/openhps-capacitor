@@ -1,6 +1,6 @@
 {
   "name": "@openhps/capacitor-geolocation",
-  "version": "0.1.18",
+  "version": "1.0.0",
   "description": "Open Hybrid Positioning System - Web Geolocation API",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
@@ -46,13 +46,13 @@
     "build:webpack:dev": "cross-env ../../node_modules/.bin/webpack --env dev --"
   },
   "peerDependencies": {
-    "@openhps/core": ">=0.3.2",
-    "@capacitor/core": ">=4.7.0",
-    "@capacitor/geolocation": ">=4.1.0"
+    "@openhps/core": ">=1.0.16",
+    "@capacitor/core": ">=7.4.3",
+    "@capacitor/geolocation": ">=7.1.5"
   },
   "devDependencies": {
-    "@capacitor/core": "^5.7.0",
-    "cross-env": "^7.0.3",
-    "@capacitor/geolocation": "^5.0.7"
+    "@capacitor/core": "^7.4.3",
+    "cross-env": "^10.0.0",
+    "@capacitor/geolocation": "^7.1.5"
   }
 }

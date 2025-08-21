@@ -1,6 +1,6 @@
 {
   "name": "@openhps/capacitor-bluetooth",
-  "version": "0.1.18",
+  "version": "1.0.0",
   "description": "Open Hybrid Positioning System - Capacitor Bluetooth Scanning",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
@@ -52,9 +52,9 @@
     "@capacitor-community/bluetooth-le": ">=2.1.0"
   },
   "devDependencies": {
-    "@capacitor/core": "^5.7.0",
-    "@openhps/rf": ">=0.1.61",
-    "cross-env": "^7.0.3",
-    "@capacitor-community/bluetooth-le": "^3.1.2"
+    "@capacitor/core": "^7.4.3",
+    "@openhps/rf": ">=1.0.4",
+    "cross-env": "^10.0.0",
+    "@capacitor-community/bluetooth-le": "^7.1.1"
   }
 }

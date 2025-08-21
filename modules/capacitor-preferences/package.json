@@ -1,6 +1,6 @@
 {
   "name": "@openhps/capacitor-preferences",
-  "version": "0.1.18",
+  "version": "1.0.0",
   "description": "Open Hybrid Positioning System - Capacitor Preferences API",
   "author": "Maxim Van de Wynckel",
   "license": "Apache-2.0",
@@ -50,12 +50,12 @@
     "@openhps/core": ">=0.3.2"
   },
   "devDependencies": {
-    "@capacitor/core": "^5.7.0",
-    "cross-env": "^7.0.3",
+    "@capacitor/core": "^7.4.3",
+    "cross-env": "^10.0.0",
     "node-localstorage": "^3.0.5"
   },
   "dependencies": {
-    "@capacitor/preferences": "^5.0.7",
+    "@capacitor/preferences": "^7.0.2",
     "lz-string": "^1.5.0"
   }
 }
