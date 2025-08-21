@@ -151,7 +151,7 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                     const jsonStr = this.options.compress ? decompressFromUTF16(result.value) : result.value;
                     try {
                         resolve(JSON.parse(jsonStr));
-                    } catch (ex) {
+                    } catch {
                         resolve(undefined);
                     }
                 })
