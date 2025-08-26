@@ -2,29 +2,39 @@
 # yarn lockfile v1
 
 
-"@capacitor/motion@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@capacitor/motion/-/motion-4.0.2.tgz#f5e91b82de65e46b34d3b8be8518be4496eb1a39"
-  integrity sha512-reLCkCwyM6ntGrd5jWL98kQi5wlUqkh/HpYIWpAis6qXIL9rIEvkFNG5oAG5B7Jepz3kO2WIFoou+OgfPHF8aw==
-
-"@openhps/web-sensors@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@openhps/web-sensors/-/web-sensors-0.1.3.tgz#81668fc726e487753a84ead03178d5c1cd40651c"
-  integrity sha512-PQM4QQnhBWgjKjm2TGvJF72iiwK539Ltl3kdMo8iVs8bAn6Jdc5I+Vw1c69YADCJWJbE0u3VHyTFHVF6R3nivQ==
+"@capacitor/core@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-7.4.3.tgz#eaf81286af7d8b109c18be9f0c01a8a94c86c352"
+  integrity sha512-wCWr8fQ9Wxn0466vPg7nMn0tivbNVjNy1yL4GvDSIZuZx7UpU2HeVGNe9QjN/quEd+YLRFeKEBLBw619VqUiNg==
   dependencies:
-    https-localhost "^4.7.1"
+    tslib "^2.1.0"
 
-"@types/w3c-generic-sensor@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@types/w3c-generic-sensor/-/w3c-generic-sensor-1.0.6.tgz#3669e4a2c53ccfbf12bf9b761816cab7c3e52be0"
-  integrity sha512-l8yadNOf9j7zRsRtDVp9xRBC2mx3RJIi6eE2e43ggrE6hTJyEyOUc/MFp//k5IE36u7lBt5DXBAk6hFIq+3I8A==
+"@capacitor/motion@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@capacitor/motion/-/motion-7.0.1.tgz#ef54cb6c4b20de659d1262b4a4e7eac09fc9a7e4"
+  integrity sha512-jExCBAcB7NsCCnD07sfNhVgp2xgwN2dmyehpjsPswWGCJaTToN9lzwYyJz9As9q59sikq9n36DpNnyjP3smGAQ==
+
+"@epic-web/invariant@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@epic-web/invariant/-/invariant-1.0.0.tgz#1073e5dee6dd540410784990eb73e4acd25c9813"
+  integrity sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==
+
+"@openhps/web-sensors@>=1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@openhps/web-sensors/-/web-sensors-1.0.2.tgz#3a9bc95934ac2502ccd9bfe2eb5ed5c8a723e6fc"
+  integrity sha512-1uTUMdSaBWVWd0HRx7Db99NOFzoNfwfXgySrQSsDz7ODpoRiyltbjR17XITM4jasGgOoSn2Rtbal4rAzEBMlrQ==
+
+"@types/w3c-generic-sensor@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@types/w3c-generic-sensor/-/w3c-generic-sensor-1.0.10.tgz#0107bb051af247697e80502f0b8b7f02d1811a73"
+  integrity sha512-C56c4FhueauZcGyez3WHMzQ4LgRkJ6TNYimmYTWF0u1ncaipghmjfB+971/rU7UfrwajJg5OTcv+fp0VjjTzig==
   dependencies:
     typescript "^2.2.2"
 
-"@types/web@^0.0.92":
-  version "0.0.92"
-  resolved "https://registry.yarnpkg.com/@types/web/-/web-0.0.92.tgz#b38e9c4a2b10ff728db25139beb5f6df6e966712"
-  integrity sha512-i9mM47aUrYCG+H3Q8czM9YDqdxJ1uIZW+E2urzI4VCCJF5vDtXv1myL5OuwichFNIJ+vlO3HUYr4ReI4BJqT1w==
+"@types/web@^0.0.263":
+  version "0.0.263"
+  resolved "https://registry.yarnpkg.com/@types/web/-/web-0.0.263.tgz#2853e423cb14ef74ee15eba697d669a661a6d2d3"
+  integrity sha512-wxGFP3aj57jvnCZPsKEt1cZF83ohN95A/tJME6oa2mjPlMmVZONos5LmRWJuaYtVw1WjDW36hMBYosMUGEo9Xw==
 
 accepts@~1.3.5, accepts@~1.3.8:
   version "1.3.8"
@@ -135,17 +145,18 @@ cors@^2.8.5:
     object-assign "^4"
     vary "^1"
 
-cross-env@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
-  integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
+cross-env@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-10.0.0.tgz#ba25823cfa1ed6af293dcded8796fa16cd162456"
+  integrity sha512-aU8qlEK/nHYtVuN4p7UQgAwVljzMg8hB4YK5ThRqD2l/ziSnryncPNn7bMLt5cFYsKVKBh8HqLqyCoTupEUu7Q==
   dependencies:
-    cross-spawn "^7.0.1"
+    "@epic-web/invariant" "^1.0.0"
+    cross-spawn "^7.0.6"
 
-cross-spawn@^7.0.1:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
-  integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
+cross-spawn@^7.0.6:
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.6.tgz#8a58fe78f00dcd70c370451759dfbfaf03e8ee9f"
+  integrity sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==
   dependencies:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
@@ -633,6 +644,11 @@ toidentifier@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.1.tgz#3be34321a88a820ed1bd80dfaa33e479fbb8dd35"
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
+
+tslib@^2.1.0:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
+  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 type-is@~1.6.18:
   version "1.6.18"

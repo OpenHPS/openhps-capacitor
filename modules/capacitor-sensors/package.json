@@ -53,13 +53,13 @@
   "devDependencies": {
     "@capacitor/core": "^7.4.3",
     "@types/w3c-generic-sensor": "^1.0.10",
-    "@types/web": "^0.0.262",
+    "@types/web": "^0.0.263",
     "cross-env": "^10.0.0",
     "https-localhost": "^4.7.1",
     "@capacitor/motion": "^7.0.1",
     "@openhps/web-sensors": "^0.1.20"
   },
   "dependencies": {
-    "@openhps/web-sensors": ">=0.1.15"
+    "@openhps/web-sensors": ">=1.0.2"
   }
 }
