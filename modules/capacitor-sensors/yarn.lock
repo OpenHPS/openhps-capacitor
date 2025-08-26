@@ -19,10 +19,10 @@
   resolved "https://registry.yarnpkg.com/@epic-web/invariant/-/invariant-1.0.0.tgz#1073e5dee6dd540410784990eb73e4acd25c9813"
   integrity sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==
 
-"@openhps/web-sensors@>=1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@openhps/web-sensors/-/web-sensors-1.0.3.tgz#a88f0b5c6a62c544ae60669dd1e37e54a2dcbb1d"
-  integrity sha512-9n6CScPmZErRXJvvjU+T4ltyv5WWDI3yjoqE2qfJ4GTYXvgaYm/uIyTTpvFb56oVnoclhFSJaD5LxacSmmeXnw==
+"@openhps/web-sensors@>=1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@openhps/web-sensors/-/web-sensors-1.0.4.tgz#6b789a966dc639e33c9379c2d995c98697e9d51b"
+  integrity sha512-6RzKE5vrqN+3R0OTMQk02xKBY9eZ3m9aX9lxdkshlWPwlE1Fush5N3f4uuxRJyj/09b7jrekvStUZUgw53Iegg==
 
 "@types/w3c-generic-sensor@^1.0.10":
   version "1.0.10"
