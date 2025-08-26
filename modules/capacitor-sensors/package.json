@@ -57,9 +57,9 @@
     "cross-env": "^10.0.0",
     "https-localhost": "^4.7.1",
     "@capacitor/motion": "^7.0.1",
-    "@openhps/web-sensors": "^0.1.20"
+    "@openhps/web-sensors": ">=1.0.3"
   },
   "dependencies": {
-    "@openhps/web-sensors": ">=1.0.2"
+    "@openhps/web-sensors": ">=1.0.3"
   }
 }
