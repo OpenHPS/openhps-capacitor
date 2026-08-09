@@ -20,74 +20,77 @@ import { CapacitorPreferencesDriver } from '../../src';
 if (typeof localStorage === 'undefined' || localStorage === null) {
     // eslint-disable-next-line
     var LocalStorage = require('node-localstorage').LocalStorage;
-    global.localStorage = new LocalStorage("");
+    global.localStorage = new LocalStorage('');
     (global as any).window = { localStorage: global.localStorage };
 }
 
 describe('CapacitorPreferencesDriver', () => {
-
     describe('key value storage', () => {
         let keyValueService: KeyValueDataService;
 
         before(async () => {
-            keyValueService = new KeyValueDataService("test", new CapacitorPreferencesDriver(String, {
-                prefix: "test"
-            }));
+            keyValueService = new KeyValueDataService(
+                'test',
+                new CapacitorPreferencesDriver(String, {
+                    prefix: 'test',
+                }),
+            );
             await keyValueService.emitAsync('build');
         });
 
         it('should support saving string keys and values', async () => {
-            await keyValueService.setValue("abc", "123");
-            const value = await keyValueService.getValue("abc");
-            expect(value).to.equal("123");
+            await keyValueService.setValue('abc', '123');
+            const value = await keyValueService.getValue('abc');
+            expect(value).to.equal('123');
         });
 
-        
         it('should not have a large overhead', async () => {
-            await keyValueService.setValue("someKey:registered", JSON.stringify([
-                "1", "2", "3"
-            ]));
-            await keyValueService.setValue("someKey:item:1", "Test1");
-            await keyValueService.setValue("someKey:item:2", "Test2");
-            await keyValueService.setValue("someKey:item:3", "Test3");
+            await keyValueService.setValue('someKey:registered', JSON.stringify(['1', '2', '3']));
+            await keyValueService.setValue('someKey:item:1', 'Test1');
+            await keyValueService.setValue('someKey:item:2', 'Test2');
+            await keyValueService.setValue('someKey:item:3', 'Test3');
         });
-
     });
 
     describe('without compression', () => {
         let objectDataService: DataObjectService<DataObject>;
 
         before(async () => {
-            objectDataService = new DataObjectService(new CapacitorPreferencesDriver(DataObject, {
-                compress: true
-            }));
+            objectDataService = new DataObjectService(
+                new CapacitorPreferencesDriver(DataObject, {
+                    compress: true,
+                }),
+            );
             await objectDataService.deleteAll();
             const object1 = new DataObject();
             object1.setPosition(new Absolute2DPosition(5, 6));
             object1.displayName = 'Test';
             object1.createdTimestamp = Date.parse('10 Mar 1995 00:00:00 GMT');
-    
+
             const object2 = new DataObject();
             object2.setPosition(new Absolute3DPosition(5, 6, 2));
             object2.displayName = 'Test';
             object2.parentUID = object1.uid;
             object2.createdTimestamp = Date.parse('10 Mar 1995 01:00:00 GMT');
-    
+
             const object3 = new DataObject();
             object3.setPosition(new Absolute3DPosition(1, 1, 2));
             object3.displayName = 'Maxim';
             object3.createdTimestamp = Date.parse('10 Mar 1995 02:00:00 GMT');
-    
+
             await objectDataService.insert(object1.uid, object1);
             await objectDataService.insert(object2.uid, object2);
             await objectDataService.insert(object3.uid, object3);
         });
-        
+
         it('should support sorting in descending order', (done) => {
             objectDataService
-                .findAll({}, {
-                    sort: [['createdTimestamp', -1]]
-                })
+                .findAll(
+                    {},
+                    {
+                        sort: [['createdTimestamp', -1]],
+                    },
+                )
                 .then((objects) => {
                     expect(objects.length).to.equal(3);
                     expect(objects[0].createdTimestamp).to.equal(794800800000);
@@ -96,14 +99,17 @@ describe('CapacitorPreferencesDriver', () => {
                 })
                 .catch((ex) => {
                     done(ex);
-            });
+                });
         });
-    
+
         it('should support sorting in ascending order', (done) => {
             objectDataService
-                .findAll({}, {
-                    sort: [['createdTimestamp', 1]]
-                })
+                .findAll(
+                    {},
+                    {
+                        sort: [['createdTimestamp', 1]],
+                    },
+                )
                 .then((objects) => {
                     expect(objects.length).to.equal(3);
                     expect(objects[0].createdTimestamp).to.equal(794793600000);
@@ -112,14 +118,17 @@ describe('CapacitorPreferencesDriver', () => {
                 })
                 .catch((ex) => {
                     done(ex);
-            });
+                });
         });
 
         it('should support sorting strings in ascending order', (done) => {
             objectDataService
-                .findAll({}, {
-                    sort: [['displayName', 1]]
-                })
+                .findAll(
+                    {},
+                    {
+                        sort: [['displayName', 1]],
+                    },
+                )
                 .then((objects) => {
                     expect(objects.length).to.equal(3);
                     expect(objects[0].createdTimestamp).to.equal(794800800000);
@@ -128,9 +137,9 @@ describe('CapacitorPreferencesDriver', () => {
                 })
                 .catch((ex) => {
                     done(ex);
-            });
+                });
         });
-    
+
         it('should find data objects before a certain date', (done) => {
             objectDataService
                 .findBefore(Date.parse('10 Mar 1995 01:30:00 GMT'))
@@ -142,7 +151,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should find data objects after a certain date', (done) => {
             objectDataService
                 .findAfter(Date.parse('10 Mar 1995 01:30:00 GMT'))
@@ -154,7 +163,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should find a object by 2d position', (done) => {
             objectDataService
                 .findByPosition(new Absolute2DPosition(5, 6))
@@ -170,7 +179,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should find a object by 3d position', (done) => {
             objectDataService
                 .findByPosition(new Absolute3DPosition(5, 6, 2))
@@ -187,7 +196,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should store objects', (done) => {
             const object = new DataObject('2');
             object.displayName = 'Test';
@@ -201,7 +210,7 @@ describe('CapacitorPreferencesDriver', () => {
                 });
             });
         });
-    
+
         it('should throw an error when quering non existing objects', (done) => {
             objectDataService
                 .findByUID('test')
@@ -212,13 +221,13 @@ describe('CapacitorPreferencesDriver', () => {
                     done();
                 });
         });
-    
+
         it('should find all items', () => {
             objectDataService.findAll().then((objects) => {
                 expect(objects.length).to.be.gte(1);
             });
         });
-    
+
         it('should find by display name', () => {
             objectDataService.findByDisplayName('Test').then((objects) => {
                 expect(objects.length).to.equal(3);
@@ -230,36 +239,41 @@ describe('CapacitorPreferencesDriver', () => {
         let objectDataService: DataObjectService<DataObject>;
 
         before(async () => {
-            objectDataService = new DataObjectService(new CapacitorPreferencesDriver(DataObject, {
-                compress: true
-            }));
+            objectDataService = new DataObjectService(
+                new CapacitorPreferencesDriver(DataObject, {
+                    compress: true,
+                }),
+            );
             await objectDataService.deleteAll();
             const object1 = new DataObject();
             object1.setPosition(new Absolute2DPosition(5, 6));
             object1.displayName = 'Test';
             object1.createdTimestamp = Date.parse('10 Mar 1995 00:00:00 GMT');
-    
+
             const object2 = new DataObject();
             object2.setPosition(new Absolute3DPosition(5, 6, 2));
             object2.displayName = 'Test';
             object2.parentUID = object1.uid;
             object2.createdTimestamp = Date.parse('10 Mar 1995 01:00:00 GMT');
-    
+
             const object3 = new DataObject();
             object3.setPosition(new Absolute3DPosition(1, 1, 2));
             object3.displayName = 'Maxim';
             object3.createdTimestamp = Date.parse('10 Mar 1995 02:00:00 GMT');
-    
+
             await objectDataService.insert(object1.uid, object1);
             await objectDataService.insert(object2.uid, object2);
             await objectDataService.insert(object3.uid, object3);
         });
-    
+
         it('should support sorting in descending order', (done) => {
             objectDataService
-                .findAll({}, {
-                    sort: [['createdTimestamp', -1]]
-                })
+                .findAll(
+                    {},
+                    {
+                        sort: [['createdTimestamp', -1]],
+                    },
+                )
                 .then((objects) => {
                     expect(objects.length).to.equal(3);
                     expect(objects[0].createdTimestamp).to.equal(794800800000);
@@ -268,14 +282,17 @@ describe('CapacitorPreferencesDriver', () => {
                 })
                 .catch((ex) => {
                     done(ex);
-            });
+                });
         });
-    
+
         it('should support sorting in ascending order', (done) => {
             objectDataService
-                .findAll({}, {
-                    sort: [['createdTimestamp', 1]]
-                })
+                .findAll(
+                    {},
+                    {
+                        sort: [['createdTimestamp', 1]],
+                    },
+                )
                 .then((objects) => {
                     expect(objects.length).to.equal(3);
                     expect(objects[0].createdTimestamp).to.equal(794793600000);
@@ -284,9 +301,9 @@ describe('CapacitorPreferencesDriver', () => {
                 })
                 .catch((ex) => {
                     done(ex);
-            });
+                });
         });
-    
+
         it('should find data objects before a certain date', (done) => {
             objectDataService
                 .findBefore(Date.parse('10 Mar 1995 01:30:00 GMT'))
@@ -298,7 +315,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should find data objects after a certain date', (done) => {
             objectDataService
                 .findAfter(Date.parse('10 Mar 1995 01:30:00 GMT'))
@@ -310,7 +327,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should find a object by 2d position', (done) => {
             objectDataService
                 .findByPosition(new Absolute2DPosition(5, 6))
@@ -326,7 +343,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should find a object by 3d position', (done) => {
             objectDataService
                 .findByPosition(new Absolute3DPosition(5, 6, 2))
@@ -343,7 +360,7 @@ describe('CapacitorPreferencesDriver', () => {
                     done(ex);
                 });
         });
-    
+
         it('should store objects', (done) => {
             const object = new DataObject('2');
             object.displayName = 'Test';
@@ -357,7 +374,7 @@ describe('CapacitorPreferencesDriver', () => {
                 });
             });
         });
-    
+
         it('should throw an error when quering non existing objects', (done) => {
             objectDataService
                 .findByUID('test')
@@ -368,13 +385,13 @@ describe('CapacitorPreferencesDriver', () => {
                     done();
                 });
         });
-    
+
         it('should find all items', () => {
             objectDataService.findAll().then((objects) => {
                 expect(objects.length).to.be.gte(1);
             });
         });
-    
+
         it('should find by display name', () => {
             objectDataService.findByDisplayName('Test').then((objects) => {
                 expect(objects.length).to.equal(3);
@@ -441,32 +458,42 @@ describe('CapacitorPreferencesDriver', () => {
             object.setPosition(new Absolute2DPosition(5, 3));
             object.displayName = 'X';
             promises.push(objectDataService.insert(object.uid, object));
-            for (let i = 0 ; i <= 10 ; i++){
+            for (let i = 0; i <= 10; i++) {
                 const object = new DummySensorObject('123' + i);
                 object.setPosition(new Absolute2DPosition(5, i));
                 object.displayName = 'Beat';
                 promises.push(objectDataService.insert(object.uid, object));
             }
-            Promise.all(promises).then(() => {
-                objectDataService.count({
-                    displayName: "Beat"
-                }).then(count1 => {
-                    expect(count1, "Stored objects count is 0").to.not.eq(0);
-                    objectDataService.deleteAll({
-                        displayName: "Beat"
-                    }).then(() => {
-                        return objectDataService.count({
-                            displayName: "Beat"
-                        });
-                    }).then(count2 => {
-                        expect(count2).to.eq(0);
-                        return objectDataService.count();
-                    }).then(count => {
-                        expect(count).to.not.eq(0);
-                        done();
-                    }).catch(done);
-                }).catch(done);
-            }).catch(done);
+            Promise.all(promises)
+                .then(() => {
+                    objectDataService
+                        .count({
+                            displayName: 'Beat',
+                        })
+                        .then((count1) => {
+                            expect(count1, 'Stored objects count is 0').to.not.eq(0);
+                            objectDataService
+                                .deleteAll({
+                                    displayName: 'Beat',
+                                })
+                                .then(() => {
+                                    return objectDataService.count({
+                                        displayName: 'Beat',
+                                    });
+                                })
+                                .then((count2) => {
+                                    expect(count2).to.eq(0);
+                                    return objectDataService.count();
+                                })
+                                .then((count) => {
+                                    expect(count).to.not.eq(0);
+                                    done();
+                                })
+                                .catch(done);
+                        })
+                        .catch(done);
+                })
+                .catch(done);
         });
 
         it('should delete all objects', (done) => {
@@ -482,9 +509,13 @@ describe('CapacitorPreferencesDriver', () => {
 
         before((done) => {
             ModelBuilder.create()
-                .addService(new DataObjectService(new CapacitorPreferencesDriver(DataObject, {
-                    namespace: "sink"
-                })))
+                .addService(
+                    new DataObjectService(
+                        new CapacitorPreferencesDriver(DataObject, {
+                            namespace: 'sink',
+                        }),
+                    ),
+                )
                 .from()
                 .store()
                 .build()
@@ -492,7 +523,8 @@ describe('CapacitorPreferencesDriver', () => {
                     model = m;
                     objectDataService = model.findDataService(DataObject);
                     return objectDataService.deleteAll();
-                }).then(() => {
+                })
+                .then(() => {
                     done();
                 });
         });
@@ -571,7 +603,6 @@ describe('CapacitorPreferencesDriver', () => {
         });
     });
 
-    
     describe('sink node without persistence', () => {
         let model: Model<DataFrame, DataFrame>;
         let objectDataService: DataObjectService<DataObject>;
@@ -579,15 +610,18 @@ describe('CapacitorPreferencesDriver', () => {
         before((done) => {
             ModelBuilder.create()
                 .from()
-                .to(new CallbackSinkNode(() => {}, {
-                    persistence: false
-                }))
+                .to(
+                    new CallbackSinkNode(() => {}, {
+                        persistence: false,
+                    }),
+                )
                 .build()
                 .then((m) => {
                     model = m;
                     objectDataService = model.findDataService(DataObject);
                     return objectDataService.deleteAll();
-                }).then(() => {
+                })
+                .then(() => {
                     done();
                 });
         });

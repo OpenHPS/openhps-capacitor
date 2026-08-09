@@ -1,22 +1,13 @@
 import Vuex from 'vuex';
 import { RootState } from './types';
-import {
-    system
-} from './modules/';
+import { system } from './modules/';
 
 export default new Vuex.Store<RootState>({
-    state: {
-    },
+    state: {},
     modules: {
-        system
+        system,
     },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    },
+    getters: {},
+    mutations: {},
+    actions: {},
 });
