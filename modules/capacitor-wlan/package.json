@@ -1,96 +1,104 @@
 {
-  "name": "@openhps/capacitor-wlan",
-  "version": "1.0.6",
-  "description": "Open Hybrid Positioning System - Capacitor WLAN Scanning",
-  "author": "Maxim Van de Wynckel",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/OpenHPS/openhps-capacitor.git"
-  },
-  "bugs": {
-    "url": "https://github.com/OpenHPS/openhps-capacitor/issues"
-  },
-  "homepage": "https://openhps.org",
-  "publishConfig": {
-    "access": "public"
-  },
-  "sideEffects": false,
-  "main": "./dist/plugin.cjs.js",
-  "types": "./dist/types/index.d.ts",
-  "unpkg": "dist/plugin.js",
-  "jsdelivr": "./dist/web/openhps-capacitor-sensors.min.js",
-  "module": "./dist/esm5/index.js",
-  "es2015": "./dist/esm/index.js",
-  "files": [
-    "android/src/main/",
-    "android/build.gradle",
-    "dist/",
-    "ios/Plugin/",
-    "electron/",
-    "OpenHpsCapacitorWlan.podspec",
-    "electron/"
-  ],
-  "keywords": [
-    "openhps",
-    "capacitor"
-  ],
-  "scripts": {
-    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS && cd ..",
-    "verify:android": "cd android && ./gradlew clean build test && cd ..",
-    "verify:web": "npm run build",
-    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
-    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- autocorrect --format",
-    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
-    "swiftlint": "node-swiftlint",
-    "build": "npm run clean && cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:rollup && npm run build:electron && npm run build:typedoc",
-    "build:rollup": "rollup -c rollup.config.js --bundleConfigAsCjs",
-    "build:electron": "cross-env ../../node_modules/.bin/tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js --bundleConfigAsCjs && rimraf ./electron/build",
-    "clean": "rimraf ./dist",
-    "watch": "cross-env ../../node_modules/.bin/tsc --watch",
-    "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
-    "cover": "cross-env ../../node_modules/.bin/nyc cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json && cross-env ../../node_modules/.bin/nyc report --reporter=cobertura",
-    "cover:ci": "cross-env ../../node_modules/.bin/nyc cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json --reporter mocha-junit-reporter && cross-env ../../node_modules/.bin/nyc report --reporter=cobertura",
-    "build:quick": "cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:webpack",
-    "build:typedoc": "cross-env ../../node_modules/.bin/typedoc --options docs/typedoc.json",
-    "build:ts:cjs": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.cjs.json",
-    "build:ts:esm": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.esm.json",
-    "build:ts:esm5": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.esm5.json",
-    "build:ts:types": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.types.json"
-  },
-  "peerDependencies": {
-    "@capacitor/core": ">=4.7.0",
-    "@openhps/core": ">=0.3.2",
-    "@openhps/rf": ">=0.1.19"
-  },
-  "devDependencies": {
-    "@capacitor/android": "^7.4.3",
-    "@capacitor/core": "^7.4.3",
-    "@capacitor/ios": "^7.4.3",
-    "@openhps/rf": ">=1.0.4",
-    "@rollup/plugin-commonjs": "^28.0.6",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "cross-env": "^10.0.0",
-    "prettier": "~3.6.2",
-    "prettier-plugin-java": "~2.7.4",
-    "rimraf": "^6.0.1",
-    "rollup": "^4.47.1",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "swiftlint": "^2.0.0"
-  },
-  "capacitor": {
-    "ios": {
-      "src": "ios"
+    "name": "@openhps/capacitor-wlan",
+    "version": "1.0.6",
+    "description": "Open Hybrid Positioning System - Capacitor WLAN Scanning",
+    "author": "Maxim Van de Wynckel",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/OpenHPS/openhps-capacitor.git"
     },
-    "android": {
-      "src": "android"
+    "bugs": {
+        "url": "https://github.com/OpenHPS/openhps-capacitor/issues"
     },
-    "electron": {
-      "src": "electron"
+    "homepage": "https://openhps.org",
+    "publishConfig": {
+        "access": "public"
+    },
+    "sideEffects": false,
+    "main": "./dist/cjs/index.js",
+    "types": "./dist/types/index.d.ts",
+    "unpkg": "dist/plugin.js",
+    "jsdelivr": "./dist/web/openhps-capacitor-sensors.min.js",
+    "module": "./dist/esm/index.js",
+    "es2015": "./dist/esm/index.js",
+    "files": [
+        "android/src/main/",
+        "android/build.gradle",
+        "dist/",
+        "ios/Plugin/",
+        "electron/",
+        "OpenHpsCapacitorWlan.podspec",
+        "electron/"
+    ],
+    "keywords": [
+        "openhps",
+        "capacitor"
+    ],
+    "scripts": {
+        "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+        "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -destination generic/platform=iOS && cd ..",
+        "verify:android": "cd android && ./gradlew clean build test && cd ..",
+        "verify:web": "npm run build",
+        "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+        "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- autocorrect --format",
+        "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
+        "swiftlint": "node-swiftlint",
+        "build": "npm run clean && cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:rollup && npm run build:electron && npm run build:typedoc",
+        "build:rollup": "rollup -c rollup.config.js --bundleConfigAsCjs",
+        "build:electron": "cross-env ../../node_modules/.bin/tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js --bundleConfigAsCjs && rimraf ./electron/build",
+        "clean": "rimraf ./dist",
+        "watch": "cross-env ../../node_modules/.bin/tsc --watch",
+        "test": "cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json",
+        "cover": "cross-env ../../node_modules/.bin/c8 cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json && cross-env ../../node_modules/.bin/c8 report --reporter=cobertura",
+        "cover:ci": "cross-env ../../node_modules/.bin/c8 cross-env ../../node_modules/.bin/mocha --config test/.mocharc.json --reporter mocha-junit-reporter && cross-env ../../node_modules/.bin/c8 report --reporter=cobertura",
+        "build:quick": "cross-env ../../node_modules/.bin/npm-run-all --parallel build:ts:* && npm run build:webpack",
+        "build:typedoc": "cross-env ../../node_modules/.bin/typedoc --options docs/typedoc.json",
+        "build:ts:cjs": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.cjs.json",
+        "build:ts:esm": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.esm.json && node ../../scripts/finalize-esm.mjs .",
+        "build:ts:types": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.types.json"
+    },
+    "peerDependencies": {
+        "@capacitor/core": ">=4.7.0",
+        "@openhps/core": ">=1.0.16 <2",
+        "@openhps/rf": ">=1.0.4 <2"
+    },
+    "devDependencies": {
+        "@capacitor/android": "^7.4.3",
+        "@capacitor/core": "^7.4.3",
+        "@capacitor/ios": "^7.4.3",
+        "@openhps/rf": "^1.0.4",
+        "@rollup/plugin-commonjs": "^28.0.6",
+        "@rollup/plugin-node-resolve": "^16.0.1",
+        "cross-env": "^10.0.0",
+        "prettier": "~3.6.2",
+        "prettier-plugin-java": "~2.7.4",
+        "rimraf": "^6.0.1",
+        "rollup": "^4.47.1",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "swiftlint": "^2.0.0",
+        "@openhps/core": "^1.0.16"
+    },
+    "capacitor": {
+        "ios": {
+            "src": "ios"
+        },
+        "android": {
+            "src": "android"
+        },
+        "electron": {
+            "src": "electron"
+        }
+    },
+    "dependencies": {
+        "node-wifi": "^2.0.16"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js"
+        },
+        "./package.json": "./package.json"
     }
-  },
-  "dependencies": {
-    "node-wifi": "^2.0.16"
-  }
 }
