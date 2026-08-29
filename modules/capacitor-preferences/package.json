@@ -55,7 +55,7 @@
         "@openhps/core": "^1.0.16"
     },
     "dependencies": {
-        "@capacitor/preferences": "^7.0.2",
+        "@capacitor/preferences": "^8.0.1",
         "lz-string": "^1.5.0"
     },
     "exports": {
