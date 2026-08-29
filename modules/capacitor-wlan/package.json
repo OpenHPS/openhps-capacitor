@@ -64,7 +64,7 @@
         "@openhps/rf": ">=1.0.4 <2"
     },
     "devDependencies": {
-        "@capacitor/android": "^7.4.3",
+        "@capacitor/android": "^8.5.0",
         "@capacitor/core": "^7.4.3",
         "@capacitor/ios": "^7.4.3",
         "@openhps/rf": "^1.0.4",
