@@ -55,7 +55,7 @@
         "@types/web": "^0.0.263",
         "cross-env": "^10.0.0",
         "https-localhost": "^4.7.1",
-        "@capacitor/motion": "^7.0.1",
+        "@capacitor/motion": "^8.0.1",
         "@openhps/web-sensors": ">=1.0.4",
         "@openhps/core": "^1.0.16"
     },
