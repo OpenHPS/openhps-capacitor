@@ -52,7 +52,7 @@
     "devDependencies": {
         "@capacitor/core": "^7.4.3",
         "@types/w3c-generic-sensor": "^1.0.10",
-        "@types/web": "^0.0.263",
+        "@types/web": "^0.0.354",
         "cross-env": "^10.0.0",
         "https-localhost": "^4.7.1",
         "@capacitor/motion": "^7.0.1",
