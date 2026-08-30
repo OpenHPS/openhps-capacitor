@@ -59,14 +59,14 @@
         "build:ts:types": "cross-env ../../node_modules/.bin/tsc --build tsconfig/tsconfig.bundle.types.json"
     },
     "peerDependencies": {
-        "@capacitor/core": ">=4.7.0",
+        "@capacitor/core": ">=4.7.0 <9",
         "@openhps/core": ">=1.0.16 <2",
         "@openhps/rf": ">=1.0.4 <2"
     },
     "devDependencies": {
-        "@capacitor/android": "^7.4.3",
-        "@capacitor/core": "^7.4.3",
-        "@capacitor/ios": "^7.4.3",
+        "@capacitor/android": "^8.5.0",
+        "@capacitor/core": "^8.5.0",
+        "@capacitor/ios": "^8.5.0",
         "@openhps/rf": "^1.0.4",
         "@rollup/plugin-commonjs": "^28.0.6",
         "@rollup/plugin-node-resolve": "^16.0.1",

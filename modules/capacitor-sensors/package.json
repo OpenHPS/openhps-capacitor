@@ -46,16 +46,16 @@
     },
     "peerDependencies": {
         "@openhps/core": ">=1.0.16 <2",
-        "@capacitor/core": ">=4.7.0",
-        "@capacitor/motion": ">=4.0.2"
+        "@capacitor/core": ">=4.7.0 <9",
+        "@capacitor/motion": ">=4.0.2 <9"
     },
     "devDependencies": {
-        "@capacitor/core": "^7.4.3",
+        "@capacitor/core": "^8.5.0",
         "@types/w3c-generic-sensor": "^1.0.10",
         "@types/web": "^0.0.263",
         "cross-env": "^10.0.0",
         "https-localhost": "^4.7.1",
-        "@capacitor/motion": "^7.0.1",
+        "@capacitor/motion": "^8.0.1",
         "@openhps/web-sensors": ">=1.0.4",
         "@openhps/core": "^1.0.16"
     },
