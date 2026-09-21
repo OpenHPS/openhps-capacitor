@@ -45,19 +45,19 @@
         "build:webpack:dev": "cross-env ../../node_modules/.bin/webpack --env dev --"
     },
     "peerDependencies": {
-        "@openhps/core": ">=1.0.16 <2",
         "@capacitor/core": ">=4.7.0",
-        "@capacitor/motion": ">=4.0.2"
+        "@capacitor/motion": ">=4.0.2",
+        "@openhps/core": ">=1.0.16 <2"
     },
     "devDependencies": {
         "@capacitor/core": "^7.4.3",
-        "@types/w3c-generic-sensor": "^1.0.10",
-        "@types/web": "^0.0.263",
-        "cross-env": "^10.0.0",
-        "https-localhost": "^4.7.1",
         "@capacitor/motion": "^7.0.1",
+        "@openhps/core": "^1.0.16",
         "@openhps/web-sensors": ">=1.0.4",
-        "@openhps/core": "^1.0.16"
+        "@types/w3c-generic-sensor": "^1.0.11",
+        "@types/web": "^0.0.356",
+        "cross-env": "^10.0.0",
+        "https-localhost": "^4.7.1"
     },
     "dependencies": {
         "@openhps/web-sensors": ">=1.0.4"
