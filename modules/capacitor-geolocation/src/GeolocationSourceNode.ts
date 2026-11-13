@@ -54,18 +54,18 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
             )
                 .then((value) => {
                     this._watchId = value;
+                    resolve();
                 })
                 .catch((error) => {
                     this.logger('error', 'Unable to watch for position changes!', error);
                     reject(error);
                 });
-            resolve();
         });
     }
 
     private _convertPosition(position: Position): GeographicalPosition {
         const geoPos = new GeographicalPosition();
-        geoPos.accuracy = new Accuracy2D(position.coords.accuracy, position.coords.altitudeAccuracy, LengthUnit.METER);
+        geoPos.accuracy = new Accuracy2D(position.coords.accuracy, position.coords.accuracy, LengthUnit.METER);
         geoPos.altitude = position.coords.altitude;
         geoPos.latitude = position.coords.latitude;
         geoPos.longitude = position.coords.longitude;
@@ -85,10 +85,18 @@ export class GeolocationSourceNode extends SourceNode<DataFrame> {
 
     stop(): Promise<void> {
         return new Promise<void>((resolve) => {
-            Geolocation.clearWatch({
-                id: this._watchId,
-            });
-            resolve();
+            if (this._watchId !== undefined) {
+                Geolocation.clearWatch({
+                    id: this._watchId,
+                })
+                    .then(() => {
+                        this._watchId = undefined;
+                        resolve();
+                    })
+                    .catch(resolve);
+            } else {
+                resolve();
+            }
         });
     }
 

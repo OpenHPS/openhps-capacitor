@@ -14,7 +14,6 @@ export class BLESourceNode extends SourceNode<DataFrame> {
 
     constructor(options?: BLESourceNodeOptions) {
         super(options);
-        this.options.uuids = this.options.uuids ?? undefined;
         this.once('build', this._onBleInit.bind(this));
         this.once('destroy', this.stop.bind(this));
         this.options.source = this.source ?? new BLEObject();
@@ -79,7 +78,6 @@ export class BLESourceNode extends SourceNode<DataFrame> {
 
     start(): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.logger('debug', 'Stopping BLE scan ...');
             BleClient.stopLEScan()
                 .then(() => {
                     this.logger('debug', 'Starting BLE scan ...');
@@ -110,12 +108,21 @@ export class BLESourceNode extends SourceNode<DataFrame> {
             const beacon = new BLEObject(uid as any);
             beacon.displayName = result.device.name;
             if (result.rawAdvertisement && this.options.processRaw) {
-                beacon.parseAdvertisement(new Uint8Array(result.rawAdvertisement.buffer));
+                beacon.parseAdvertisement(
+                    new Uint8Array(
+                        result.rawAdvertisement.buffer,
+                        result.rawAdvertisement.byteOffset,
+                        result.rawAdvertisement.byteLength,
+                    ),
+                );
             } else {
                 if (result.manufacturerData) {
                     Object.keys(result.manufacturerData).forEach((manufacturer) => {
                         const data = result.manufacturerData[manufacturer];
-                        beacon.parseManufacturerData(parseInt(manufacturer), new Uint8Array(data.buffer));
+                        beacon.parseManufacturerData(
+                            parseInt(manufacturer),
+                            new Uint8Array(data.buffer, data.byteOffset, data.byteLength),
+                        );
                     });
                 }
                 if (result.serviceData !== undefined) {
@@ -123,7 +130,12 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                         const data = result.serviceData[serviceKey];
                         const serviceUUID = BLEUUID.fromString(serviceKey);
                         if (!beacon.getServiceByUUID(serviceUUID)) {
-                            beacon.addService(new BLEService(serviceUUID, new Uint8Array(data.buffer)));
+                            beacon.addService(
+                                new BLEService(
+                                    serviceUUID,
+                                    new Uint8Array(data.buffer, data.byteOffset, data.byteLength),
+                                ),
+                            );
                         }
                     });
                 }
@@ -140,7 +152,9 @@ export class BLESourceNode extends SourceNode<DataFrame> {
                 frame.source.removeRelativePositions(pos.referenceObjectUID),
             );
             frame.source.addRelativePosition(new RelativeRSSI(beacon, result.rssi));
-            this.push(frame);
+            this.push(frame).catch((ex) => {
+                this.emit('error', ex);
+            });
         } catch (ex) {
             this.emit('error', ex);
         }

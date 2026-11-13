@@ -87,15 +87,12 @@ export const system: Module<PositioningSystemState, RootState> = {
          * This callback can be used to display the location to the user.
          * @param state.state
          * @param state
+         * @param state.commit
          * @param callback
          * @param type Source node type to set callback for
          */
-        setCallback({ state }, callback: (frame: DataFrame | DataFrame[]) => void, type?: new () => SourceNode): void {
-            if (type) {
-                state.sensorCallback.set(type, callback);
-            } else {
-                state.callback = callback;
-            }
+        setCallback({ commit }, callback: (frame: DataFrame | DataFrame[]) => void, type?: new () => SourceNode): void {
+            commit('setCallback', { callback, type });
         },
         requestPermission(): Promise<void> {
             return new Promise((resolve) => {
@@ -195,6 +192,16 @@ export const system: Module<PositioningSystemState, RootState> = {
         },
     },
     mutations: {
+        setCallback(
+            state: PositioningSystemState,
+            payload: { callback: (frame: DataFrame | DataFrame[]) => void; type?: new () => SourceNode },
+        ) {
+            if (payload.type) {
+                state.sensorCallback.set(payload.type, payload.callback);
+            } else {
+                state.callback = payload.callback;
+            }
+        },
         modelCreated(state: PositioningSystemState, payload: Model) {
             state.model = payload;
         },

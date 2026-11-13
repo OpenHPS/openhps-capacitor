@@ -99,6 +99,7 @@ export class WLANSourceNode extends SourceNode<DataFrame> {
                 .then((result: { startScanSuccess: boolean; scanSuccess: boolean; scanResult: any }) => {
                     if (!result.startScanSuccess || !result.scanSuccess) {
                         this.logger('error', 'Wi-Fi scan did not succeed!');
+                        resolve(undefined);
                         return;
                     }
                     resolve(this.parseList(result.scanResult));

@@ -19,7 +19,7 @@ export class WifiWeb extends WebPlugin implements WifiPlugin {
     }
 
     async connect(options: { ssid: string; password?: string; authType?: string }): Promise<{ ssid: string | null }> {
-        console.log(options);
+        console.log(options.ssid);
         return { ssid: null };
     }
 
@@ -28,7 +28,7 @@ export class WifiWeb extends WebPlugin implements WifiPlugin {
         password?: string;
         authType?: string;
     }): Promise<{ ssid: string | null }> {
-        console.log(options);
+        console.log(options.ssid);
         return { ssid: null };
     }
 

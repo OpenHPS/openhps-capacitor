@@ -80,18 +80,22 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
 
     private _findAll(write: boolean): Promise<I[]> {
         return new Promise((resolve, reject) => {
+            let id: number;
+            let readLockReleased = false;
             this._lockIndex(write)
-                .then((id) => {
+                .then((lockId) => {
+                    id = lockId;
                     return Promise.all([
-                        id,
+                        lockId,
                         Preferences.get({
                             key: `${this.prefix}_keys`,
                         }),
                     ]);
                 })
-                .then(([id, result]) => {
+                .then(([lockId, result]) => {
                     if (!write) {
-                        this._unlockIndex(id);
+                        readLockReleased = true;
+                        this._unlockIndex(lockId);
                     }
 
                     if (result.value === null) {
@@ -99,7 +103,17 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                     }
                     resolve(JSON.parse(result.value) || []);
                 })
-                .catch(reject);
+                .catch((err) => {
+                    // Release the read lock before propagating the error so a failed
+                    // lookup cannot deadlock later writes (write locks are released by
+                    // the caller's `finally`). Only release here if it was not already
+                    // released on the success path, to avoid clobbering a concurrent
+                    // exclusive lock.
+                    if (!write && !readLockReleased && id !== undefined) {
+                        this._unlockIndex(id);
+                    }
+                    reject(err);
+                });
         });
     }
 
@@ -167,7 +181,7 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                         const obj = this.options.deserialize(serialized);
                         resolve(obj);
                     } else {
-                        reject(`${this.dataType.name} with identifier #${id} not found!`);
+                        reject(new Error(`${this.dataType.name} with identifier #${id} not found!`));
                     }
                 })
                 .catch(reject);
@@ -207,6 +221,9 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
                                     break;
                                 }
                             }
+                        }
+                        if (!options.sort && data.length >= options.limit) {
+                            break;
                         }
                     }
                     if (options.sort) {
@@ -271,7 +288,10 @@ export class CapacitorPreferencesDriver<I, T> extends DataServiceDriver<I, T> {
         return new Promise<void>((resolve, reject) => {
             this._findAll(true)
                 .then((items) => {
-                    items.splice(items.indexOf(id), 1);
+                    const index = items.indexOf(id);
+                    if (index !== -1) {
+                        items.splice(index, 1);
+                    }
                     return Preferences.set({
                         key: `${this.prefix}_keys`,
                         value: JSON.stringify(items),
