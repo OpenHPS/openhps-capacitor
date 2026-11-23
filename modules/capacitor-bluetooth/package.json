@@ -54,7 +54,7 @@
         "@capacitor-community/bluetooth-le": "^8.3.0",
         "@capacitor/core": "^8.6.2",
         "@openhps/core": "^1.0.16",
-        "@openhps/rf": "^1.0.4",
+        "@openhps/rf": "^1.1.1",
         "cross-env": "^10.0.0"
     },
     "exports": {
